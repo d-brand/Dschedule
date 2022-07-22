@@ -1,0 +1,27 @@
+<h1>新規アカウント作成</h1>
+<p id="notice"><%= notice %></p>
+    <%=form_for( @user,url:admin_users_path, local: true) do |f| %>
+    <div class="field">
+      <%= f.label :名前 %> <br />
+      <%= f.text_field :name %>
+    </div>
+
+    <div class="field">
+      <%= f.label :メールアドレス %> <br />
+      <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :パスワード %>
+      <%= f.password_field :password, autocomplete: "current-password" %>
+    </div>
+
+    <%=f.fields_for :teamcore do |i| %>
+      <%= i.label :チーム名 %>
+      <%=i.text_field:teamname %>
+    <% end %>
+
+    <div style="clear: both; padding-top: 10px;"><%= f.submit "保存", { class: "btn-border" } %></div>
+
+    <% end %>
+     <div style="clear: both; padding-top: 10px;"><%= link_to "戻る", :back, { class: "btn-border" } %></div>

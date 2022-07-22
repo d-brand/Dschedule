@@ -1,7 +1,20 @@
 <!DOCTYPE html>
 <html>
   <head>
-       <title>NEK</title>
+  <% if user_signed_in? %>
+    <% if !@team.nil?%>
+      <title><%=@team.teamname%>|スケジュール調整</title>
+    <% else %>
+      <title>マスター管理画面</title>
+    <%end%>
+  <% else %>
+
+    <% if !@team.nil?%>
+      <title><%=@team.teamname%>|スケジュール調整</title>
+    <% else %>
+      <title>スケジュール調整</title>
+    <%end%>
+  <% end %>
 <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,8 +23,33 @@
   </head>
 
   <body>
-  <header><h1>NEK</h1></header>
+  <% if user_signed_in?%>
+      <% if !@team.nil? %>
+        <header><h1>チーム：<%=@team.teamname%></h1></header>
+        <nav>
+          <%= link_to 'プロフィール変更', edit_user_registration_path %>
+          <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
+          <%= link_to 'チーム名変更',  edit_team_path(@team) %>
+        </nav>
+      <% else %>
+       <header><h1>マスター管理画面</h1></header>
+        <nav>
+          <%= link_to 'プロフィール変更', edit_user_registration_path %>
+          <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
+        </nav>
+       <% end %>
+       <div id="column"><%= yield %></div>
+  <% else %>
+
+    <% if !@team.nil? %>
+      <header><h1>チーム：<%=@team.teamname%></h1></header>
+    <% else %>
+      <header><h1>スケジュール調整</h1></header>
+    <% end %>
     <div id="column"><%= yield %></div>
-  <footer>&copy;2021 D Brand Co.,Ltd.<span><%= link_to 'ご利用規約', schedule_path('kiyaku'), { class: "tar" } %></span></footer>
+
+  <% end %>
+  
+  <footer>&copy;2022 D Brand Co.,Ltd.<span><%= link_to 'ご利用規約', schedule_path('kiyaku'), { class: "tar" } %></span></footer>
   </body>
 </html>

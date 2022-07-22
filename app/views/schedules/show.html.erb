@@ -14,82 +14,117 @@
                 <td class="border_tl" align="center" bgcolor="#ffb6c1">欠席</td>
             </tr>
         </tr>
-        <% @schedules.each do |schedule| %>
-        <% if @schedule.id == schedule.id %>
-        <tr class="active">
-            <td class="border_t" rowspan="2">            
-                <% weeks = ["月","火","水","木","金","土","日"] %>
-                <% index = schedule.ymd.strftime("%u").to_i %>
-                <%= link_to schedule.ymd.strftime("%Y年%m月%d日(#{weeks[index - 1]})"), schedule %><br><%= schedule.start.strftime('%H:%M') %> ～ <%= schedule.end.strftime('%H:%M') %><br><%= schedule.place %>
-            </td>
-            <td class="border_tl" colspan="4"><%= simple_format schedule.addcomment %></td>
+        <% if @schedules.count > 0 %>
+            <% @schedules.each do |schedule| %>
+            <% if params[:id].to_i == schedule.id %>
             <tr class="active">
-                <td class="border_tl" align="center"><%= schedule.answer.sanka&.count %></td>
-                <td class="border_tl" align="center"><%= schedule.answer.tabun&.count %></td>
-                <td class="border_tl" align="center"><%= schedule.answer.mitei&.count %></td>
-                <td class="border_tl" align="center"><%= schedule.answer.kesseki&.count %></td>
+                <td class="border_t" rowspan="2">            
+                    <% weeks = ["月","火","水","木","金","土","日"] %>
+                    <% index = schedule.ymd.strftime("%u").to_i %>
+                    <% if user_signed_in? %>
+                        <%= link_to schedule.ymd.strftime("%Y年%m月%d日(#{weeks[index - 1]})"), schedule %><br><%= schedule.start.strftime('%H:%M') %> ～ <%= schedule.end.strftime('%H:%M') %><br><%= schedule.place %>
+                    <% else %>
+                        <%= link_to schedule.ymd.strftime("%Y年%m月%d日(#{weeks[index - 1]})"), schedule_path(id:schedule.id, access_token: params[:access_token]) %><br><%= schedule.start.strftime('%H:%M') %> ～ <%= schedule.end.strftime('%H:%M') %><br><%= schedule.place %>
+                    <% end %>
+                </td>
+                <td class="border_tl" colspan="4"><%= simple_format schedule.addcomment %></td>
+                <tr class="active">
+                    <td class="border_tl" align="center"><%= schedule.answers.sanka&.count %></td>
+                    <td class="border_tl" align="center"><%= schedule.answers.tabun&.count %></td>
+                    <td class="border_tl" align="center"><%= schedule.answers.mitei&.count %></td>
+                    <td class="border_tl" align="center"><%= schedule.answers.kesseki&.count %></td>
+                </tr>
             </tr>
-        </tr>
-        <% else %>
-        <tr>
-            <td class="border_t" rowspan="2">            
-                <% weeks = ["月","火","水","木","金","土","日"] %>
-                <% index = schedule.ymd.strftime("%u").to_i %>
-                <%= link_to schedule.ymd.strftime("%Y年%m月%d日(#{weeks[index - 1]})"), schedule %><br><%= schedule.start.strftime('%H:%M') %> ～ <%= schedule.end.strftime('%H:%M') %><br><%= schedule.place %>
-            </td>
-            <td class="border_tl" colspan="4"><%= simple_format schedule.addcomment %></td>
+            <% else %>
             <tr>
-                <td class="border_tl" align="center"><%= schedule.answer.sanka&.count %></td>
-                <td class="border_tl" align="center"><%= schedule.answer.tabun&.count %></td>
-                <td class="border_tl" align="center"><%= schedule.answer.mitei&.count %></td>
-                <td class="border_tl" align="center"><%= schedule.answer.kesseki&.count %></td>
+                <td class="border_t" rowspan="2">            
+                    <% weeks = ["月","火","水","木","金","土","日"] %>
+                    <% index = schedule.ymd.strftime("%u").to_i %>
+                    <% if user_signed_in? %>
+                        <%= link_to schedule.ymd.strftime("%Y年%m月%d日(#{weeks[index - 1]})"), schedule %><br><%= schedule.start.strftime('%H:%M') %> ～ <%= schedule.end.strftime('%H:%M') %><br><%= schedule.place %>
+                    <% else %>
+                        <%= link_to schedule.ymd.strftime("%Y年%m月%d日(#{weeks[index - 1]})"), schedule_path(id:schedule.id, access_token: params[:access_token]) %><br><%= schedule.start.strftime('%H:%M') %> ～ <%= schedule.end.strftime('%H:%M') %><br><%= schedule.place %>
+                    <% end %>
+
+                </td>
+                <td class="border_tl" colspan="4"><%= simple_format schedule.addcomment %></td>
+                <tr>
+                    <td class="border_tl" align="center"><%= schedule.answers.sanka&.count %></td>
+                    <td class="border_tl" align="center"><%= schedule.answers.tabun&.count %></td>
+                    <td class="border_tl" align="center"><%= schedule.answers.mitei&.count %></td>
+                    <td class="border_tl" align="center"><%= schedule.answers.kesseki&.count %></td>
+                </tr>
             </tr>
-        </tr>
-        <% end %>
+            <% end %>
+            <% end %>
+        <% else %>
+            <p>スケジュール準備中です。</p>
         <% end %>
     </table>
     <p><%= @caution %></p>
-    <div style="clear: both; padding: 10px 0 20px;"><%= link_to '日程を作成する（※管理者用）', new_schedule_path, { class: "btn-border" } %></div>
+     <% if @token %>
+        <p>共有URL:<%= request.url + "?access_token=#{@token.access_token}"%><p>
+        <div style="clear: both; padding: 10px 0 20px;"><%= link_to '日程を作成する（※管理者用）', new_schedule_path, { class: "btn-border" } %></div>
+      <% end %>  
 </div>
 
-<div id="right_column">
-    <table cellspacing="0" cellpadding="0" style="margin-bottom: 30px;">
-        <tr>
-            <th class="border_n" width="20%" bgcolor="#99ffcc">参加</th>
-            <td class="border_l">
-            <% @answers_sanka&.each do |answer| %>
-                <%= answer.name %>：<%= answer.comment %>
-                <%= link_to('×', answer, { method: :delete, data: { confirm: '本当に削除してもよろしいですか？' }, class: 'btn-border2' }) %><br>
-            <% end %>
-            </td>
+<% if @schedules.count > 0 %>
+    <div id="right_column">
+        <p id="notice"><%= notice %></p>
+        <table cellspacing="0" cellpadding="0" style="margin-bottom: 30px;">
+            <tr>
+                <th class="border_n" width="20%" bgcolor="#99ffcc">参加</th>
+                <td class="border_l">
+                <% @answers_sanka&.each do |answer| %>
+                    <%= answer.name %>：<%= answer.comment %>
+                    <% if user_signed_in? %>
+                        <%= link_to('×', answer, { method: :delete, data: { confirm: '本当に削除してもよろしいですか？' }, class: 'btn-border2' }) %><br>
+                    <% else %>
+                        <%= link_to('×', answer_path(id:answer.id, access_token: params[:access_token]), { method: :delete, data: { confirm: '本当に削除してもよろしいですか？' }, class: 'btn-border2' }) %><br>
+                    <% end %>
+                <% end %>
+                </td>
+                </tr>
+            <tr>
+                <th class="border_t" bgcolor="#ffffcc">多分参加</th>
+                <td class="border_tl">
+                <% @answers_tabun&.each do |answer| %>
+                    <%= answer.name %>：<%= answer.comment %>
+                    <% if user_signed_in? %>
+                        <%= link_to('×', answer, { method: :delete, data: { confirm: '本当に削除してもよろしいですか？' }, class: 'btn-border2' }) %><br>
+                    <% else %>
+                        <%= link_to('×', answer_path(id:answer.id,access_token: params[:access_token]), { method: :delete, data: { confirm: '本当に削除してもよろしいですか？' }, class: 'btn-border2' }) %><br>
+                    <% end %>
+                <% end %>
+                </td>
             </tr>
-        <tr>
-            <th class="border_t" bgcolor="#ffffcc">多分参加</th>
-            <td class="border_tl">
-            <% @answers_tabun&.each do |answer| %>
-                <%= answer.name %>：<%= answer.comment %>
-                <%= link_to('×', answer, { method: :delete, data: { confirm: '本当に削除してもよろしいですか？' }, class: 'btn-border2' }) %><br>
-            <% end %>
-            </td>
-        </tr>
-        <tr>
-            <th class="border_t" bgcolor="#d3d3d3">未定</th>
-            <td class="border_tl">
-            <% @answers_mitei&.each do |answer| %>
-                <%= answer.name %>：<%= answer.comment %>
-                <%= link_to('×', answer, { method: :delete, data: { confirm: '本当に削除してもよろしいですか？' }, class: 'btn-border2' }) %><br>
-            <% end %>
-            </td>
-        </tr>
-        <tr>
-            <th class="border_t" bgcolor="#ffb6c1">欠席</th>
-            <td class="border_tl">
-            <% @answers_kesseki&.each do |answer| %>
-                <%= answer.name %>：<%= answer.comment %>
-                <%= link_to('×', answer, { method: :delete, data: { confirm: '本当に削除してもよろしいですか？' }, class: 'btn-border2' }) %><br>
-            <% end %>
-            </td>
-        </tr>
-    </table>
-    <%= render 'form2', answer: @answer %>
-</div>
+            <tr>
+                <th class="border_t" bgcolor="#d3d3d3">未定</th>
+                <td class="border_tl">
+                <% @answers_mitei&.each do |answer| %>
+                    <%= answer.name %>：<%= answer.comment %>
+                    <% if user_signed_in? %>
+                        <%= link_to('×', answer, { method: :delete, data: { confirm: '本当に削除してもよろしいですか？' }, class: 'btn-border2' }) %><br>
+                    <% else %>
+                        <%= link_to('×', answer_path(id:answer.id,access_token: params[:access_token]), { method: :delete, data: { confirm: '本当に削除してもよろしいですか？' }, class: 'btn-border2' }) %><br>
+                    <% end %>
+                <% end %>
+                </td>
+            </tr>
+            <tr>
+                <th class="border_t" bgcolor="#ffb6c1">欠席</th>
+                <td class="border_tl">
+                <% @answers_kesseki&.each do |answer| %>
+                    <%= answer.name %>：<%= answer.comment %>
+                    <% if user_signed_in? %>
+                        <%= link_to('×', answer, { method: :delete, data: { confirm: '本当に削除してもよろしいですか？' }, class: 'btn-border2' }) %><br>
+                    <% else %>
+                        <%= link_to('×', answer_path(id:answer.id,access_token: params[:access_token]), { method: :delete, data: { confirm: '本当に削除してもよろしいですか？' }, class: 'btn-border2' }) %><br>
+                    <% end %>
+                <% end %>
+                </td>
+            </tr>
+        </table>
+        <%= render 'form2', answer: @answer %>
+    </div>
+<% end %>  

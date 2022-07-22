@@ -1,0 +1,21 @@
+<h1><%= @title %></h1>
+   <table class="table">
+        <tr>
+            <th>チーム名</th>
+        </tr>
+         <tr>
+            <td><%=@teamInfo.teamname%></td>
+         </tr>
+    </table>
+    <p>管理者情報</p>
+    <table>
+        <tr>
+            <th>メール</th>
+            <td><%= @userInfo.email %></td>
+        </tr>
+        <tr>
+            <th>名前</th>
+            <td><%= @userInfo.name %></td>
+        </tr>
+    </table>
+<%= link_to "一覧に戻る", event_index_path %> 

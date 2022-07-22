@@ -1,5 +1,7 @@
 class Schedule < ApplicationRecord
-    has_many :answer, dependent: :destroy
+    belongs_to :user
+    belongs_to :teamcore
+    has_many :answers, dependent: :destroy
     validates :place, presence: true
     validates :addcomment, presence: true
 

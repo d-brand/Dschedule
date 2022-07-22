@@ -1,5 +1,7 @@
 class AnswersController < ApplicationController
   before_action :set_answer, only: [:show, :edit, :update, :destroy]
+  before_action :token_check,if: :login_kaku
+
 
   # GET /answers
   # GET /answers.json
@@ -31,7 +33,8 @@ class AnswersController < ApplicationController
 
     respond_to do |format|
       if @answer.save
-        format.html { redirect_to schedules_url, notice: '出欠を登録しました。' }
+        #format.html { redirect_to :action=>"show", :controller=>"schedules", :id=>@answer.schedule_id,notice: '出欠を登録しました。' }
+        format.html { redirect_to schedule_path(id:@answer.schedule_id, access_token: params[:access_token]),notice: '出欠を登録しました。' }
         format.json { render :show, status: :created, location: @answer }
       else
         format.html { redirect_to schedules_url, notice: '名前が記入されていません。' }
@@ -59,7 +62,11 @@ class AnswersController < ApplicationController
   def destroy
     @answer.destroy
     respond_to do |format|
-      format.html { redirect_to schedules_url, notice: '登録が削除されました。' }
+      if current_user.present?
+        format.html { redirect_to schedules_url, notice: '登録が削除されました。' }
+      else
+        format.html { redirect_to schedule_path(id:@answer.schedule_id, access_token: params[:access_token]),notice: '登録が削除されました。' }
+      end
       format.json { head :no_content }
     end
   end
@@ -68,6 +75,22 @@ class AnswersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_answer
       @answer = Answer.find(params[:id])
+      
+    end
+
+    def token_check
+      if Teamcore.find_by(access_token:session[:access_token] )
+      else
+        redirect_to new_schedule_path, notice: 'ログインが必要です' 
+      end
+    end
+
+    def login_kaku
+      unless current_user
+        true
+      else
+        false
+      end
     end
 
     # Only allow a list of trusted parameters through.

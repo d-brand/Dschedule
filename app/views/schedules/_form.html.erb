@@ -22,6 +22,8 @@
         <th colspan="3" class="border_l" align="center" bgcolor="#e0e0e0">アクション</th>
     </tr>
     <tr>
+      <%= form.hidden_field :user_id, :value => current_user.id %>
+      <%= form.hidden_field :teamcore_id, :value => @team.id %>
       <td class="border_t" align="center"><%= form.date_select :ymd, { class: "btn-border" } %></td>
       <td class="border_tl" align="center"><%= form.time_select :start, {default: Date.today + 9.hour} %></td>
       <td class="border_tl" align="center"><%= form.time_select :end, {default: Date.today + 13.hour} %></td>

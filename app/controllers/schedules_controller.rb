@@ -1,18 +1,21 @@
 class SchedulesController < ApplicationController
+  before_action :set_token,if: :login_kaku
+  before_action :token_check,if: :login_kaku
   before_action :set_schedule, only: [:show, :edit, :update, :destroy]
-
+  before_action :team_name
+ 
   # GET /schedules
   # GET /schedules.json
   def index
     
-    @schedules = Schedule.all
-    @schedules = Schedule.where("schedules.ymd > ?", Time.current.yesterday).reorder(:ymd)
-
-    @answers = Answer.all
-    @answers_sanka = Answer.sanka
-    @answers_tabun = Answer.tabun
-    @answers_mitei = Answer.mitei
-    @answers_kesseki = Answer.kesseki
+    @schedules = Schedule.where("schedules.user_id=? and schedules.ymd > ?",current_user.id,Time.current.yesterday).reorder(:ymd)
+    @workschedule =@schedules.first
+    if @workschedule.present?
+      @answers_sanka = @workschedule.answers.where("reason =?",'sanka')
+      @answers_tabun = @workschedule.answers.where("reason =?",'tabun')
+      @answers_mitei = @workschedule.answers.where("reason =?",'mitei')
+      @answers_kesseki =  @workschedule.answers.where("reason =?",'kesseki')
+    end
     @answer = Answer.new
     @answer.schedule_id = params[:id]
 
@@ -22,30 +25,44 @@ class SchedulesController < ApplicationController
 
   # GET /schedules/1
   # GET /schedules/1.json
-  def show
-    @schedules = Schedule.where("schedules.ymd > ?", Time.current.yesterday).reorder(:ymd)
-    @answers = Answer.all
-    @answers_sanka = Answer.sanka
-    @answers_tabun = Answer.tabun
-    @answers_mitei = Answer.mitei
-    @answers_kesseki = Answer.kesseki
-
-    if params[:id]
-      schedule = Schedule.find(params[:id])
+  def show     
+    if @workguest.present?
+      @team= Teamcore.find_by(access_token: session[:access_token] )
+      @schedules = @team.schedules.where(" schedules.ymd > ?",Time.current.yesterday).reorder(:ymd)
+      @workschedule = @schedules.first
     else
-      schedule = Schedule.uketsukechu.order(ymd: :asc).first
+      @schedules = Schedule.where("schedules.user_id=? and schedules.ymd > ?",current_user.id,Time.current.yesterday).reorder(:ymd)
+      @workschedule = @schedules.first 
     end
-
-    @answers_all = schedule.answer
-    @answers_sanka = schedule.answer.sanka
-    @answers_tabun = schedule.answer.tabun
-    @answers_mitei = schedule.answer.mitei
-    @answers_kesseki = schedule.answer.kesseki
+    
+    if @workschedule.present?
+      @answers_sanka = @workschedule.answers.where("reason =?",'sanka')
+      @answers_tabun = @workschedule.answers.where("reason =?",'tabun')
+      @answers_mitei = @workschedule.answers.where("reason =?",'mitei')
+      @answers_kesseki =  @workschedule.answers.where("reason =?",'kesseki')
+    end
+    
+    if @workschedule.present?
+      if params[:id]
+          schedule = Schedule.find(params[:id])
+          @answers_sanka =  schedule.answers.where("reason =?",'sanka')
+          @answers_tabun =  schedule.answers.where("reason =?",'tabun')
+          @answers_mitei =  schedule.answers.where("reason =?",'mitei')
+          @answers_kesseki =  schedule.answers.where("reason =?",'kesseki')
+      else
+          schedule = Schedule.uketsukechu.order(ymd: :asc).first
+          @answers_sanka =  schedule.answers.where("reason =?",'sanka')
+          @answers_tabun =  schedule.answers.where("reason =?",'tabun')
+          @answers_mitei =  schedule.answers.where("reason =?",'mitei')
+          @answers_kesseki =  schedule.answers.where("reason =?",'kesseki')
+      end
+     end
 
     @answer = Answer.new
     @answer.schedule_id = params[:id]
-
-    @caution = '※チーム毎でサイト管理している為、パスワードを設けておりません。チーム幹事のみ編集してください。'
+    if current_user.present?
+      @caution = '※チーム毎でサイト管理している為、パスワードを設けておりません。チーム幹事のみ編集してください。'
+    end
   end
 
   # GET /schedules/kiyaku
@@ -54,10 +71,15 @@ class SchedulesController < ApplicationController
   
   # GET /schedules/new
   def new
-    @schedules = Schedule.where("schedules.ymd > ?", Time.current.yesterday).reorder(:ymd)
-    @schedules = Schedule.all
+    @schedules = Schedule.where("schedules.user_id=? ",current_user.id,).reorder(:ymd)
     @schedule = Schedule.new
-    @schedules = Schedule.all.order(ymd: "ASC")
+
+    if @schedules.present?
+      @kizonschedule = Schedule.where("schedules.user_id=? and schedules.ymd > ?",current_user.id,Time.current.yesterday).reorder(:ymd).first
+    else
+      @kizonschedule = 0
+    end
+
   end
 
   # GET /schedules/1/edit
@@ -107,16 +129,58 @@ class SchedulesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_schedule
+      @guest_user="ゲストログイン"
       @schedule = if params[:id].blank?
         Schedule.uketsukechu.first
       else
-        Schedule.find(params[:id])
+        #Schedule.find(params[:id])
+        if current_user.present?
+          @schedules = Schedule.where("schedules.user_id=? and schedules.ymd > ?",current_user.id,Time.current.yesterday).reorder(:ymd).first
+        else
+          @unsighn_team=Teamcore.find_by(access_token:session[:access_token] )
+          @guest_user=@unsighn_team
+          @workguest="ゲストログイン"     
+          @schedules = Schedule.where("schedules.user_id=? and schedules.ymd > ?",@guest_user.user_id,Time.current.yesterday).reorder(:ymd).first        
+        end
       end
-      # @schedule = Schedule.find(params[:id])
     end
+
+    def team_name
+     if @workguest.present?
+        @team=Teamcore.find_by(access_token:session[:access_token] )
+      else
+        @team =Teamcore.find_by(user_id:current_user.id)
+        if @team.nil?
+          @team=0
+        end
+      end
+    end
+
+    def set_token
+
+      session[:access_token] = params[:access_token]
+    end
+
+    def token_check
+      if Teamcore.find_by(access_token:session[:access_token] )
+        session[:access_token] = params[:access_token]
+      else
+        redirect_to new_schedule_path, notice: 'ログインが必要です' 
+      end
+    end
+
+    def login_kaku
+     if current_user.present?
+      @token=Teamcore.find_by(user_id:current_user.id )
+      return false
+    else
+      return true
+      end
+    end
+    
 
     # Only allow a list of trusted parameters through.
     def schedule_params
-      params.require(:schedule).permit(:ymd, :start, :end, :place, :addcomment)
+      params.require(:schedule).permit(:ymd, :start, :end, :place, :addcomment,:user_id,:teamcore_id)
     end
 end

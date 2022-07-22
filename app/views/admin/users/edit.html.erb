@@ -1,0 +1,21 @@
+<h1>アカウント編集</h1>
+    <%=form_for( @users,url: admin_user_path, local: true) do |f| %>
+    <div class="field">
+      <%= f.label :名前 %> <br />
+      <%= f.text_field :name %>
+    </div>
+
+    <div class="field">
+      <%= f.label :メールアドレス %> <br />
+      <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    </div>
+
+    <%=f.fields_for :teamcore do |i| %>
+      <%= i.label :チーム名 %><br />
+      <%=i.text_field:teamname %>
+    <% end %>
+
+    <div style="clear: both; padding-top: 10px;"><%= f.submit "保存", { class: "btn-border" } %></div>
+    <% end %>
+
+ <div style="clear: both; padding-top: 10px;"><%= link_to "戻る", :back, { class: "btn-border" } %></div>
