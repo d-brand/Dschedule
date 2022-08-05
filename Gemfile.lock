@@ -87,6 +87,7 @@ GEM
       dotenv (= 2.8.1)
       railties (>= 3.2)
     erubi (1.11.0)
+    ffi (1.15.5)
     ffi (1.15.5-x86-mingw32)
     globalid (1.0.0)
       activesupport (>= 5.0)
@@ -109,7 +110,10 @@ GEM
     nio4r (2.5.8)
     nokogiri (1.13.8-x86-mingw32)
       racc (~> 1.4)
+    nokogiri (1.13.8-x86_64-linux)
+      racc (~> 1.4)
     orm_adapter (0.5.0)
+    pg (1.4.2)
     pg (1.4.2-x86-mingw32)
     public_suffix (4.0.7)
     puma (4.3.12)
@@ -212,6 +216,7 @@ GEM
 
 PLATFORMS
   x86-mingw32
+  x86_64-linux
 
 DEPENDENCIES
   bootsnap (>= 1.4.2)
@@ -237,4 +242,4 @@ RUBY VERSION
    ruby 2.6.8p205
 
 BUNDLED WITH
-   2.0.2
+   2.3.10
