@@ -48,5 +48,4 @@ class ContactsController < ApplicationController
                       :message
                      )
       end
-    end
 end
