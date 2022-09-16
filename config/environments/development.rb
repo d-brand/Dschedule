@@ -58,7 +58,7 @@ Rails.application.configure do
   #テスト環境は以下をコメントアウト
   #config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   #本番環境用
-  config.action_mailer.default_url_options = { host: 'https://dbradschedule.herokuapp.com/' }
+  config.action_mailer.default_url_options = { host: 'dbradschedule.herokuapp.com/',protocol: 'https' }
   
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
