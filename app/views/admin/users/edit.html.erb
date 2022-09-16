@@ -1,5 +1,5 @@
 <h1>アカウント編集</h1>
-    <%=form_for( @users,url: admin_user_path, local: true) do |f| %>
+    <%=form_for( @user,url: admin_user_path, local: true) do |f| %>
     <div class="field">
       <%= f.label :名前 %> <br />
       <%= f.text_field :name %>
@@ -13,6 +13,7 @@
     <%=f.fields_for :teamcore do |i| %>
       <%= i.label :チーム名 %><br />
       <%=i.text_field:teamname %>
+      <%=i.hidden_field :id, value: i.object.id %>
     <% end %>
 
     <div style="clear: both; padding-top: 10px;"><%= f.submit "保存", { class: "btn-border" } %></div>

@@ -37,15 +37,9 @@ class ApplicationController < ActionController::Base
         @team =Teamcore.find_by(user_id:current_user.id)     
       else
         @team="master"
-        logger.debug"---------------"
-        logger.debug  @team.inspect
-        logger.debug"---------------"
       end
     else
       @team= Teamcore.find_by(access_token: session[:access_token] )
     end
-    logger.debug"---------------"
-    logger.debug  @team.inspect
-    logger.debug"---------------"
   end
 end

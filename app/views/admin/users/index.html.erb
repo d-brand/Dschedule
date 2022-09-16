@@ -5,9 +5,7 @@
       <th>チーム名</th>
       <th>名前</th>
       <th>email</th>
-      <!----------------
       <th colspan="2" class="border_l" align="center" bgcolor="#e0e0e0">アクション</th>
-      ------>
     </tr>
   </thead>
   <tbody>
@@ -16,10 +14,8 @@
         <td><%= user.teamcore.teamname %></td>
         <td><%= user.name %></td>
         <td><%= user.email %></td>
-        <!----------------
         <td class="border_tl" align="center"><%= link_to '編集', edit_admin_user_path(user), { class: "btn-border" } %></td>
         <td class="border_tl" align="center"><%= link_to '削除', admin_user_path(user), method: :delete, data: { confirm: '本当に削除してもよろしいですか？' }, class: "btn-border" %></td>
-        ------>
       </tr>
     <% end %>
   </tbody>

@@ -15,6 +15,7 @@
       <title>スケジュール調整</title>
     <%end%>
   <% end %>
+
 <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -38,6 +39,11 @@
           <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
         </nav>
        <% end %>
+        <% flash.each do |message_type, message| %>
+        <font color="#FF0000"><b>
+          <%= content_tag :div, message, class: message_type %>
+        </b></font>
+        <% end %>
        <div id="column"><%= yield %></div>
   <% else %>
 
@@ -45,6 +51,11 @@
       <header><h1>チーム：<%=@team.teamname%></h1></header>
     <% else %>
       <header><h1>スケジュール調整</h1></header>
+    <% end %>
+    <% flash.each do |message_type, message| %>
+         <font color="#FF0000"><b>
+          <%= content_tag :div, message, class: message_type %>
+        </b></font>
     <% end %>
     <div id="column"><%= yield %></div>
 
