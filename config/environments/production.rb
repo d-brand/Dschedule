@@ -61,6 +61,8 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "team_production"
 
   config.action_mailer.perform_caching = false
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
@@ -98,8 +100,7 @@ Rails.application.configure do
       address: 'smtp.sendgrid.net',
       port: 587,
       domain: 'heroku.com',
-      user_name: 'apikey![ss_ 2021-02-17 0.58.25.jpg](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/96314/30d49808-0ee1-f09e-8689-38d2e9b5dde4.jpeg)
-',
+      user_name: 'apikey',
       password: ENV['SENDGRID_APIKEY'],
       authentication: :plain,
       enable_starttls_auto: true
