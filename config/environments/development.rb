@@ -58,18 +58,18 @@ Rails.application.configure do
   #テスト環境は以下をコメントアウト
   #config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   #本番環境用
-  config.action_mailer.default_url_options = { host: 'dbradschedule.herokuapp.com',protocol: 'https' }
+  #config.action_mailer.default_url_options = { host: 'dbradschedule.herokuapp.com',protocol: 'https' }
   
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-      port: 587,
-      address: 'smtp.gmail.com',
-      domain: 'smtp.gmail.com',
-      user_name: Settings[:gmail]["user_name"],
-      password: Settings[:gmail]["password"],
-      authentication: 'login',
-      enable_starttls_auto: true
-  }
+  #config.action_mailer.delivery_method = :smtp
+  #config.action_mailer.smtp_settings = {
+    #  port: 587,
+    #  address: 'smtp.gmail.com',
+    #  domain: 'smtp.gmail.com',
+    #  user_name: Settings[:gmail]["user_name"],
+    #  password: Settings[:gmail]["password"],
+    #  authentication: 'login',
+    #  enable_starttls_auto: true
+  #}
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   # config.file_watcher = ActiveSupport::EventedFileUpdateChecker
