@@ -96,14 +96,14 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   # smtpの配信メソッドの詳細設定を行います。
   # SENDGRID用
-  config.action_mailer.smtp_settings = {
-      address: 'smtp.sendgrid.net',
-      port: 587,
-      domain: 'heroku.com',
-      user_name: ENV['SENDGRID_USERNAME'],
-      password: ENV['SENDGRID_PASSWORD'],
-      authentication: :plain,
-      enable_starttls_auto: true
+  ActionMailer::Base.smtp_settings = {
+    :port           => ENV['MAILGUN_SMTP_PORT'],
+    :address        => ENV['MAILGUN_SMTP_SERVER'],
+    :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
+    :password       => ENV['MAILGUN_SMTP_PASSWORD'],
+    :domain         => 'dbradschedule.heroku.com',
+    :authentication => :plain,
+    enable_starttls_auto: true
   }
   # Inserts middleware to perform automatic connection switching.
   # The `database_selector` hash is used to pass options to the DatabaseSelector
