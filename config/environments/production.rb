@@ -61,7 +61,6 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "team_production"
 
   config.action_mailer.perform_caching = false
-  config.action_mailer.delivery_method = :smtp
   config.action_mailer.perform_deliveries = true
 
   # Ignore bad email addresses and do not raise email delivery errors.
@@ -93,7 +92,8 @@ Rails.application.configure do
 
   # アプリケーションのホスト情報をメイラー内で使いたい場合は:hostパラメータを明示的に指定します。
   # これにより、メーラー内で、= link_to 'ようこそ', welcome_url などのように記述可能となる。
-  config.action_mailer.default_url_options = { host: 'dbradschedule.herokuapp.com' }
+  config.action_mailer.default_url_options = { host: 'https://dbradschedule.herokuapp.com/' }
+  config.action_mailer.delivery_method = :smtp
   # smtpの配信メソッドの詳細設定を行います。
   # SENDGRID用
   config.action_mailer.smtp_settings = {
