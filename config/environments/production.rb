@@ -89,6 +89,21 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+  # アプリケーションのホスト情報をメイラー内で使いたい場合は:hostパラメータを明示的に指定します。
+  # これにより、メーラー内で、= link_to 'ようこそ', welcome_url などのように記述可能となる。
+  config.action_mailer.default_url_options = { host: 'dbradschedule.herokuapp.com' }
+  # smtpの配信メソッドの詳細設定を行います。
+  # SENDGRID用
+  config.action_mailer.smtp_settings = {
+      address: 'smtp.sendgrid.net',
+      port: 587,
+      domain: 'heroku.com',
+      user_name: 'apikey![ss_ 2021-02-17 0.58.25.jpg](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/96314/30d49808-0ee1-f09e-8689-38d2e9b5dde4.jpeg)
+',
+      password: ENV['SENDGRID_APIKEY'],
+      authentication: :plain,
+      enable_starttls_auto: true
+  }
   # Inserts middleware to perform automatic connection switching.
   # The `database_selector` hash is used to pass options to the DatabaseSelector
   # middleware. The `delay` is used to determine how long to wait after a write
