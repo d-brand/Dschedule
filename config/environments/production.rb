@@ -98,7 +98,7 @@ Rails.application.configure do
    # このオプションは、外部のメールサーバーが即時配信を行っている場合にのみ機能します。
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.smtp_settings = {
-  :user_name => ENV['SENDGRID_USERNAME'],
+  :user_name => 'apikey',
   :password => ENV['SENDGRID_PASSWORD'],
   :domain => 'heroku.com',
   :address => 'smtp.sendgrid.net',
