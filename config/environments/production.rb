@@ -90,18 +90,16 @@ Rails.application.configure do
 
   # アプリケーションのホスト情報をメイラー内で使いたい場合は:hostパラメータを明示的に指定します。
   # これにより、メーラー内で、= link_to 'ようこそ', welcome_url などのように記述可能となる。
-  config.action_mailer.default_url_options = { host: 'dbradschedule.herokuapp.com' }
+  config.action_mailer.default_url_options = { host: 'dbradschedule.herokuapp.com', protocol: 'https' }
   config.action_mailer.delivery_method = :smtp
   # smtpの配信メソッドの詳細設定を行います。
   # SENDGRID用
   config.action_mailer.perform_deliveries = true
-   # このオプションは、外部のメールサーバーが即時配信を行っている場合にのみ機能します。
-  config.action_mailer.raise_delivery_errors = true
   config.action_mailer.smtp_settings = {
-  :user_name => 'apikey',
-  :password => ENV['SENDGRID_PASSWORD'],
-  :domain => 'heroku.com',
-  :address => 'smtp.sendgrid.net',
+  :user_name => ENV['GMAIL_USERNAME'],
+  :password => ENV['GMAIL_PASSWORD'],
+  :domain => 'gmail.com',
+  :address => 'smtp.gmail.com',
   :port => 587,
   :authentication => :plain,
   :enable_starttls_auto => true
