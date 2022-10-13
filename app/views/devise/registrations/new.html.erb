@@ -1,34 +1,36 @@
-<h2>新規作成</h2>
+<h2>新規登録</h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
-
+  <%= form_with model: @user, url: users_sign_up_confirm_path(@user), local: true do |f| %>
 
   <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%= f.label :ご登録メールアドレス %><br />
+    <%= f.email_field :email,required: true, autofocus: true, autocomplete: "email" %>
   </div>
 
   <div class="field">
-    <%= f.label :名前 %> <br />
-    <%= f.text_field :name %>
+    <%= f.label :お名前 %> <br />
+    <%= f.text_field :name,required: true %>
   </div>
 
   <div class="field">
     <%= f.label :パスワード %>
     <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <em>(<%= @minimum_password_length %> 文字以上)</em>
     <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
+    <%= f.password_field :password, required: true,autocomplete: "new-password" %>
   </div>
 
   <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+    <%= f.label :パスワード確認用 %><br />
+    <%= f.password_field :password_confirmation, required: true,autocomplete: "new-password" %>
   </div>
+  
+  <p>登録後、ご登録されたメールアドレスに認証メールが送付されます。</p>
+  <p>届きましたメールにて認証をよろしくお願いいたします。</p>
 
   <div class="actions">
-    <%= f.submit "新規登録" %>
+    <%= f.submit "確認" %>
   </div>
 <% end %>
 <!--

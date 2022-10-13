@@ -11,8 +11,15 @@ Rails.application.routes.draw do
   resources :team
   resources :answers
   resources :schedules
-  devise_for :users
+  # registrations_controller.rbを有効にします。
+  devise_for :users, controllers: {
+    registrations: 'users/registrations'
+  }
   
+  devise_scope :user do
+    post 'users/sign_up/confirm', to: 'users/registrations#confirm'
+    get 'users/sign_up/complete', to: 'users/registrations#complete'
+  end
   # お問い合わせフォーム
   resources :contacts, only: [:new, :create]
   post 'contacts/confirm', to: 'contacts#confirm', as: 'confirm'

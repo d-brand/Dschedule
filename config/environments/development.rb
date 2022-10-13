@@ -56,7 +56,7 @@ Rails.application.configure do
   # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
   #テスト環境は以下をコメントアウト
-  #config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  # config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   #本番環境用
   #config.action_mailer.default_url_options = { host: 'dbradschedule.herokuapp.com',protocol: 'https' }
   
