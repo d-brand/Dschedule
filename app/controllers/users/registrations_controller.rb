@@ -42,7 +42,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       i += 1
     end
   end
-  
+
   def email_notice
     redirect_to expired_path unless params[:email]
   end
@@ -51,10 +51,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def complete
   end
   
-  # アカウント登録後
-  def after_sign_up_path_for(resource)
-    users_sign_up_complete_path(resource)
-  end
+  # # アカウント登録後
+  # def after_sign_up_path_for(resource)
+  #   users_sign_up_complete_path(resource)
+  # end
 
   # private
   # def registration_params
@@ -80,10 +80,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   devise_parameter_sanitizer.permit(:account_update, keys: [:attribute])
   # end
 
-  # The path used after sign up.
-  # def after_sign_up_path_for(resource)
-  #   super(resource)
-  # end
+   The path used after sign up.
+   def after_sign_up_path_for(resource)
+    users_sign_up_email_notice(email: resource.email)
+   end
 
   # The path used after sign up for inactive accounts.
   # def after_inactive_sign_up_path_for(resource)
