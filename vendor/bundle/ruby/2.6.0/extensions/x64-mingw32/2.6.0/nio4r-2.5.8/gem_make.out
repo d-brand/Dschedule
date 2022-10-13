@@ -1,5 +1,5 @@
 current directory: C:/work/dbradschedule/vendor/bundle/ruby/2.6.0/gems/nio4r-2.5.8/ext/nio4r
-C:/Ruby26-x64/bin/ruby.exe -I C:/Ruby26-x64/lib/ruby/2.6.0 -r ./siteconf20221004-14196-3oi5ka.rb extconf.rb
+C:/Ruby26-x64/bin/ruby.exe -I C:/Ruby26-x64/lib/ruby/2.6.0 -r ./siteconf20221013-15792-ddx1jb.rb extconf.rb
 
 current directory: C:/work/dbradschedule/vendor/bundle/ruby/2.6.0/gems/nio4r-2.5.8/ext/nio4r
 make "DESTDIR=" clean

@@ -1,5 +1,5 @@
 current directory: C:/work/dbradschedule/vendor/bundle/ruby/2.6.0/gems/websocket-driver-0.7.5/ext/websocket-driver
-C:/Ruby26-x64/bin/ruby.exe -I C:/Ruby26-x64/lib/ruby/2.6.0 -r ./siteconf20221004-14196-152e0nq.rb extconf.rb
+C:/Ruby26-x64/bin/ruby.exe -I C:/Ruby26-x64/lib/ruby/2.6.0 -r ./siteconf20221013-15792-i9n7tj.rb extconf.rb
 creating Makefile
 
 current directory: C:/work/dbradschedule/vendor/bundle/ruby/2.6.0/gems/websocket-driver-0.7.5/ext/websocket-driver
@@ -13,4 +13,4 @@ linking shared-object websocket_mask.so
 
 current directory: C:/work/dbradschedule/vendor/bundle/ruby/2.6.0/gems/websocket-driver-0.7.5/ext/websocket-driver
 make "DESTDIR=" install
-/usr/bin/install -c -m 0755 websocket_mask.so ./.gem.20221004-14196-ofl3d7
+/usr/bin/install -c -m 0755 websocket_mask.so ./.gem.20221013-15792-1tw3pa0

@@ -1,5 +1,5 @@
 current directory: C:/work/dbradschedule/vendor/bundle/ruby/2.6.0/gems/bindex-0.8.1/ext/skiptrace
-C:/Ruby26-x64/bin/ruby.exe -I C:/Ruby26-x64/lib/ruby/2.6.0 -r ./siteconf20221004-14196-1n91ulq.rb extconf.rb
+C:/Ruby26-x64/bin/ruby.exe -I C:/Ruby26-x64/lib/ruby/2.6.0 -r ./siteconf20221013-15792-1g0xrud.rb extconf.rb
 creating Makefile
 
 current directory: C:/work/dbradschedule/vendor/bundle/ruby/2.6.0/gems/bindex-0.8.1/ext/skiptrace
@@ -13,4 +13,4 @@ linking shared-object skiptrace/internal/cruby.so
 
 current directory: C:/work/dbradschedule/vendor/bundle/ruby/2.6.0/gems/bindex-0.8.1/ext/skiptrace
 make "DESTDIR=" install
-/usr/bin/install -c -m 0755 cruby.so ./.gem.20221004-14196-17tzvsc/skiptrace/internal
+/usr/bin/install -c -m 0755 cruby.so ./.gem.20221013-15792-14ci82n/skiptrace/internal
