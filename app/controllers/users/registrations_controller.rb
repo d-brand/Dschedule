@@ -42,6 +42,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
       i += 1
     end
   end
+  
+  def email_notice
+    redirect_to expired_path unless params[:email]
+  end
 
   # 完了画面
   def complete

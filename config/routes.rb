@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   
   devise_scope :user do
     post 'users/sign_up/confirm', to: 'users/registrations#confirm'
+    get 'users/sign_up/email_notice', to: 'users/registrations#email_notice'
     get 'users/sign_up/complete', to: 'users/registrations#complete'
   end
   # お問い合わせフォーム
