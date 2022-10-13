@@ -82,7 +82,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
    #The path used after sign up.
    def after_inactive_sign_up_path_for(resource)
-    users_sign_up_complete(resource)
+    users_sign_up_email_notice_path(email: resource.email)
    end
 
   # The path used after sign up for inactive accounts.
