@@ -1,4 +1,6 @@
 class Users::Mailer < Devise::Mailer
+  before_action :add_inline_attachment!
+
     helper :application
     include Devise::Controllers::UrlHelpers
     default template_path: 'devise/mailer'
@@ -14,4 +16,14 @@ class Users::Mailer < Devise::Mailer
       #件名の指定以外は親を継承
       super
     end
+
+    private
+
+  def add_inline_attachment!
+    pngs = ['confirmuser_banner.png']
+
+    pngs.each do |png|
+      attachments.inline[png] = File.read("#{Rails.root}/app/assets/images/confirmuser_banner/" + png)
+    end
+  end
   end
