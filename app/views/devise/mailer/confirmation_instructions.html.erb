@@ -20,8 +20,11 @@
   <br/>
     ※認証を完了しなければ、ログインできないため必ず実施してください。
   <br/>
-  <%= image_tag attachments['confirmuser_banner.png'].url, alt: "ユーザー認証を実行"%>
-  <p><%= link_to 'アカウント有効化', confirmation_url(@resource, confirmation_token: @token) %></p>
+  <p>
+  <%= link_to confirmation_url(@resource, confirmation_token: @token) do%>
+    <%= image_tag attachments['confirmuser_banner.png'].url, alt: "ユーザー認証を実行"%>
+  <% end %>
+  </p>
 <% end %>
 <br/>
 <br/>
