@@ -7,7 +7,6 @@ class Users::Mailer < Devise::Mailer
     def confirmation_instructions(record, token, opts={})
       #record内にユーザ情報が入っていました。そこの"unconfirmed_email"の有無で登録／変更を仕分けます
       #opts属性を上書きすることで、Subjectやfromなどのヘッダー情報を変更することが可能！
-      attachments.inline['confirmuser_banner.png'] = File.read('app/assets/images/confirmuser_banner.png')
       if record.unconfirmed_email != nil
         opts[:subject] = "【Dbrandscedule】メールアドレス変更手続きを完了してください"
       else
