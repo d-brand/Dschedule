@@ -61,7 +61,6 @@
             <p>スケジュール準備中です。</p>
         <% end %>
     </table>
-    <p><%= @caution %></p>
      <% if @token %>
         <p>共有URL:<%= request.url + "?access_token=#{@token.access_token}"%><p>
         <div style="clear: both; padding: 10px 0 20px;"><%= link_to '日程を作成する（※管理者用）', new_schedule_path, { class: "btn-border" } %></div>

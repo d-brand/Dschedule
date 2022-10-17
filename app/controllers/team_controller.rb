@@ -3,7 +3,7 @@ class TeamController < ApplicationController
   #before_action :teamname
 
   def index
-    @title ="チーム情報"
+    @title ="グループ情報"
     @teamInfo=Teamcore.find_by(user_id:current_user.id)
     @userInfo=User.find(current_user.id)
   end
@@ -17,7 +17,7 @@ class TeamController < ApplicationController
   end
   
   def show
-    @title="チーム詳細"
+    @title="グループ詳細"
     @teamShow=Teamcore.find(params[:id])
   end
   
@@ -38,7 +38,7 @@ class TeamController < ApplicationController
     
     @team=Teamcore.find(params[:id])
     if @team.update(team_params)
-      redirect_to :action=>"index", :controller=>"schedules", notice: 'チーム名が更新されました。' 
+      redirect_to :action=>"index", :controller=>"schedules", notice: 'グループ名が更新されました。' 
     else
       redirect_to :action=>"index", :controller=>"schedules"
     end

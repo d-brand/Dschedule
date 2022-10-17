@@ -35,6 +35,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # 確認画面
   def confirm
     @user = User.new(sign_up_params)
+    if @user.invalid?
+      flash.now[:danger] = '入力内容にエラーがあります。'
+      render :new
+      return
+    end
     i = 0
     @password = ""
     while i < @user.password.length

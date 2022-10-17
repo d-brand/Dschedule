@@ -19,7 +19,7 @@ class SchedulesController < ApplicationController
     @answer = Answer.new
     @answer.schedule_id = params[:id]
 
-    @caution = '※チーム毎でサイト管理している為、パスワードを設けておりません。チーム幹事のみ編集してください。'
+    #@caution = '※チーム毎でサイト管理している為、パスワードを設けておりません。チーム幹事のみ編集してください。'
     
   end
 
@@ -61,7 +61,7 @@ class SchedulesController < ApplicationController
     @answer = Answer.new
     @answer.schedule_id = params[:id]
     if current_user.present?
-      @caution = '※チーム毎でサイト管理している為、パスワードを設けておりません。チーム幹事のみ編集してください。'
+      #@caution = '※チーム毎でサイト管理している為、パスワードを設けておりません。チーム幹事のみ編集してください。'
     end
   end
 

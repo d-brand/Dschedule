@@ -23,7 +23,7 @@ class Users::Mailer < Devise::Mailer
     pngs = ['confirmuser_banner.png']
 
     pngs.each do |png|
-      attachments.inline[png] = File.read("#{Rails.root}/app/assets/images/" + png)
+      attachments.inline[png] ={:content=>  File.read("#{Rails.root}/app/assets/images/" + png),:content_id=>"confirmuser_banner.png"}
     end
   end
   end

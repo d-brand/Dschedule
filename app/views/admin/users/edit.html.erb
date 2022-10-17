@@ -11,7 +11,7 @@
     </div>
 
     <%=f.fields_for :teamcore do |i| %>
-      <%= i.label :チーム名 %><br />
+      <%= i.label :グループ名 %><br />
       <%=i.text_field:teamname %>
       <%=i.hidden_field :id, value: i.object.id %>
     <% end %>

@@ -26,11 +26,11 @@
   <body>
   <% if user_signed_in?%>
       <% if !@team.nil? %>
-        <header><h1>チーム：<%=@team.teamname%></h1></header>
+        <header><h1>グループ：<%=@team.teamname%></h1></header>
         <nav>
           <%= link_to 'プロフィール変更', edit_user_registration_path %>
           <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
-          <%= link_to 'チーム名変更',  edit_team_path(@team) %>
+          <%= link_to 'グループ名変更',  edit_team_path(@team) %>
         </nav>
       <% else %>
        <header><h1>マスター管理画面</h1></header>
@@ -48,7 +48,7 @@
   <% else %>
 
     <% if !@team.nil? %>
-      <header><h1>チーム：<%=@team.teamname%></h1></header>
+      <header><h1>グループ：<%=@team.teamname%></h1></header>
     <% else %>
       <header><h1>スケジュール調整</h1></header>
     <% end %>
