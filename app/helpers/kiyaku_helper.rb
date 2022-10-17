@@ -1,0 +1,2 @@
+module KiyakuHelper
+end

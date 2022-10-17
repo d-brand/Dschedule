@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'kiyaku/index'
   get 'top', to: 'home#top', as: :top
   root to:'home#index'
   namespace :admin do
@@ -6,11 +7,11 @@ Rails.application.routes.draw do
   end
   #root 'schedules#show'
   # get "/" => "schedules#index"
-  get "schedules/kiyaku" => "schedules#kiyaku"
   get 'login', to: 'home#index'
   resources :team
   resources :answers
   resources :schedules
+  resources :kiyaku
   # registrations_controller.rbを有効にします。
   devise_for :users, controllers: {
     registrations: 'users/registrations'

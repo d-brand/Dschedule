@@ -1,7 +1,7 @@
-<h1>Team作成</h1>
+<h1>グループ作成</h1>
     <%=form_for( @teamCreate,url:team_index_path, local: true) do |f| %>
         <label for ="teamname">グループ名</label>
         <%=f.text_field:teamname %>
         <%=f.hidden_field :user_id, :value => current_user.id %>
-        <%= f.submit "保存"%>
+        <%= f.submit "作成"%>
     <% end %>

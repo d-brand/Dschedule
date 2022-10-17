@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  before_action :kiyaku
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :team_name,only: [:after_sign_in_path]
 
@@ -41,5 +42,9 @@ class ApplicationController < ActionController::Base
     else
       @team= Teamcore.find_by(access_token: session[:access_token] )
     end
+  end
+
+  def kiyaku
+    kiyaku_index_path
   end
 end

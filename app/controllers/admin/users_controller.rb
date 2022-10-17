@@ -47,6 +47,9 @@ class Admin::UsersController < ApplicationController
       render new_admin_user_path
     end
   end
+  
+  def kiyaku
+  end
 
   def destroy
     @user.destroy
