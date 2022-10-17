@@ -27,4 +27,8 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   # def after_confirmation_path_for(resource_name, resource)
   #   super(resource_name, resource)
   # end
+  def after_confirmation_path_for(resource)
+    users_sign_up_email_notice_path(email: resource.email)
+  end
+
 end
