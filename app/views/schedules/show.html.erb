@@ -3,10 +3,12 @@
 <h1>開催日程</h1>
 <div id="left_column">
      <% if @token %>
-        共有URL:
-            <input id="copyTarget" type="text" size="50" value="<%= request.url + "?access_token=#{@token.access_token}"%>" readonly>
-            <button onclick="copyToClipboard()">共有URLをコピー</button><br>
-            <div class="line-it-button" data-lang="ja" data-type="share-a" data-env="REAL" data-url="<%= request.url + "?access_token=#{@token.access_token}"%>" data-color="default" data-size="large" data-count="true" data-ver="3" style="display: none;"></div>
+        <div>共有URL:
+            <input id="copyTarget" type="text" size="62" value="<%= request.url + "?access_token=#{@token.access_token}"%>" readonly>
+            <button onclick="copyToClipboard()">共有URLをコピー</button>
+            <input type="button" value="LINE共有ボタンを表示する" onclick="window.location.reload();" />
+        </div>
+        <div class="line-it-button" data-lang="ja" data-type="share-a" data-env="REAL" data-url="<%= request.url + "?access_token=#{@token.access_token}"%>" data-color="default" data-size="large" data-count="true" data-ver="3" style="display: none;"></div>
       <% end %>  
     <table cellspacing="0" cellpadding="0">
         <tr>
