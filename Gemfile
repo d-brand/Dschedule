@@ -61,3 +61,6 @@ gem "dotenv-rails"
 group :production do
   gem 'pg'
 end
+gem 'zeroclipboard-rails'
+gem 'jquery-rails'
+gem 'clipboard-rails'

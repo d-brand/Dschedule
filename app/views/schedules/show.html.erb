@@ -1,8 +1,13 @@
 <p id="notice"><%= notice %></p>
 
 <h1>開催日程</h1>
-
 <div id="left_column">
+     <% if @token %>
+        共有URL:
+            <input id="copyTarget" type="text" size="50" value="<%= request.url + "?access_token=#{@token.access_token}"%>" readonly>
+            <button onclick="copyToClipboard()">共有URLをコピー</button><br>
+            <div class="line-it-button" data-lang="ja" data-type="share-a" data-env="REAL" data-url="<%= request.url + "?access_token=#{@token.access_token}"%>" data-color="default" data-size="large" data-count="true" data-ver="3" style="display: none;"></div>
+      <% end %>  
     <table cellspacing="0" cellpadding="0">
         <tr>
             <th class="border_n" rowspan="2" width="30%" bgcolor="#bfbfbf">日時・場所</th>
@@ -62,8 +67,7 @@
         <% end %>
     </table>
      <% if @token %>
-        <p>共有URL:<%= request.url + "?access_token=#{@token.access_token}"%><p>
-        <div style="clear: both; padding: 10px 0 20px;"><%= link_to '日程を作成する（※管理者用）', new_schedule_path, { class: "btn-border" } %></div>
+         <div style="clear: both; padding: 10px 0 20px;"><%= link_to '日程を作成する（※管理者用）', new_schedule_path, { class: "btn-border" } %></div>
       <% end %>  
 </div>
 
@@ -127,3 +131,20 @@
         <%= render 'form2', answer: @answer %>
     </div>
 <% end %>  
+
+<script>
+ function copyToClipboard() {
+      // コピー対象をJavaScript上で変数として定義する
+      var copyTarget = document.getElementById("copyTarget");
+
+      // コピー対象のテキストを選択する
+      copyTarget.select();
+
+      // 選択しているテキストをクリップボードにコピーする
+      document.execCommand("Copy");
+
+      // コピーをお知らせする
+      alert("コピーできました！ : " + copyTarget.value);
+ }
+</script>
+<script src="https://www.line-website.com/social-plugins/js/thirdparty/loader.min.js" async="async" defer="defer"></script>
