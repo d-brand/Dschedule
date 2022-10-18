@@ -1,7 +1,8 @@
 class SchedulesController < ApplicationController
   before_action :set_token,if: :login_kaku
   before_action :token_check,if: :login_kaku
-  before_action :set_schedule, only: [:show, :edit, :update, :destroy]
+  before_action :set_schedule, only: [:show]
+  before_action :update_set_schedule, only: [:edit, :update, :destroy]
   before_action :team_name
  
   # GET /schedules
@@ -81,9 +82,12 @@ class SchedulesController < ApplicationController
     end
 
   end
-
+  
   # GET /schedules/1/edit
   def edit
+    logger.debug "-------------"
+    logger.debug @schedule.inspect
+    logger.debug"-------------"
   end
 
   # POST /schedules
@@ -143,6 +147,10 @@ class SchedulesController < ApplicationController
           @schedules = Schedule.where("schedules.user_id=? and schedules.ymd > ?",@guest_user.user_id,Time.current.yesterday).reorder(:ymd).first        
         end
       end
+    end
+
+    def update_set_schedule
+        @schedule = Schedule.find(params[:id])
     end
 
     def team_name
