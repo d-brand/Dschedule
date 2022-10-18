@@ -85,9 +85,6 @@ class SchedulesController < ApplicationController
   
   # GET /schedules/1/edit
   def edit
-    logger.debug "-------------"
-    logger.debug @schedule.inspect
-    logger.debug"-------------"
   end
 
   # POST /schedules
