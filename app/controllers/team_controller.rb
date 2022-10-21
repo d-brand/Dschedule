@@ -58,7 +58,7 @@ class TeamController < ApplicationController
       
       @team=Teamcore.find(params[:id])
       if @team.update(team_params)
-        redirect_to :action=>"index", :controller=>"schedules", notice: 'グループ名が更新されました。' 
+        redirect_to :action=>"index", :controller=>"schedules" 
       else
         redirect_to :action=>"index", :controller=>"schedules"
       end
