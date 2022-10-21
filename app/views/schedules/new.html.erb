@@ -26,4 +26,8 @@
 <p><%= @attention %></p>
 <p><%= @msg %></p>
 
+<% if @kizonschedule == 0 %>
   <div style="clear: both; padding-top: 10px;"><%= link_to '日程一覧に戻る', schedules_path, { class: "btn-border" } %></div>
+<% else %>
+  <div style="clear: both; padding-top: 10px;"><%= link_to '日程一覧に戻る', schedule_path(@kizonschedule.id), { class: "btn-border" } %></div>
+<% end %>

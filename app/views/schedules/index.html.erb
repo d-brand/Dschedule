@@ -1,10 +1,76 @@
 
 <h1>開催日程</h1>
 
-<%= render 'table', schedule: @schedule %>
+<div id="left_column">
+     <% if @token %>
+        <div>グループURL:
+            <input id="copyTarget" type="text" size="62" value="<%= request.url + "?access_token=#{@token.access_token}"%>" readonly >
+            <button onclick="copyToClipboard()">イベントのURLをコピー</button>
+            <input type="button" value="LINE共有ボタンを表示する" onclick="window.location.reload();" />
+        </div>
+        <div class="line-it-button" data-lang="ja" data-type="share-a" data-env="REAL" data-url="<%= request.url + "?access_token=#{@token.access_token}"%>" data-color="default" data-size="large" data-count="true" data-ver="3" style="display: none;"></div>
+      <% end %>  
+    <table cellspacing="0" cellpadding="0">
+        <tr>
+            <th class="border_n" rowspan="2" width="30%" bgcolor="#bfbfbf">日時・場所</th>
+            <td class="border_l" colspan="4" align="center" bgcolor="#bfbfbf">コメント</td>
+            <tr>
+                <td class="border_tl" align="center" bgcolor="#99ffcc">参加</td>
+                <td class="border_tl" align="center" bgcolor="#ffffcc">多分</td>
+                <td class="border_tl" align="center" bgcolor="#d3d3d3">未定</td>
+                <td class="border_tl" align="center" bgcolor="#ffb6c1">欠席</td>
+            </tr>
+        </tr>
+     <% if @schedules.count > 0 %>
+        <% @schedules.each do |schedule| %>
+            <tr>
+            <td class="border_t" rowspan="2">
+
+            
+            <% weeks = ["月","火","水","木","金","土","日"] %>
+            <% index = schedule.ymd.strftime("%u").to_i %>
+            <% if user_signed_in? %>
+                <%= link_to schedule.ymd.strftime("%Y年%m月%d日(#{weeks[index - 1]})"), schedule %><br><%= schedule.start.strftime('%H:%M') %> ～ <%= schedule.end.strftime('%H:%M') %><br><%= schedule.place %>
+            <% else %>
+                <%= link_to schedule.ymd.strftime("%Y年%m月%d日(#{weeks[index - 1]})"), schedule_path(id:schedule.id, access_token: params[:access_token]) %><br><%= schedule.start.strftime('%H:%M') %> ～ <%= schedule.end.strftime('%H:%M') %><br><%= schedule.place %>
+            <% end %>
+
+            </td>
+            <td class="border_tl" colspan="4"><%= simple_format schedule.addcomment %></td>
+            <tr>
+                <td class="border_tl" align="center"><%= schedule.answers.sanka&.count %></td>
+                <td class="border_tl" align="center"><%= schedule.answers.tabun&.count %></td>
+                <td class="border_tl" align="center"><%= schedule.answers.mitei&.count %></td>
+                <td class="border_tl" align="center"><%= schedule.answers.kesseki&.count %></td>
+            </tr>
+        </tr>
+        <% end %>
+     <% else %>
+        <p>スケジュール準備中です。</p>
+    <% end %>
+    </table>
+</div>
 
 <div id="right_column">
     <p>※出欠登録するには該当する日付をクリックしてください。</p>
     <p id="notice"><%= notice %></p>
 </div>
-<div style="clear: both; padding: 10px 0 20px;"><%= link_to '日程を作成する（※管理者用）', new_schedule_path, { class: "btn-border" } %></div>
+<% if @token %>
+         <div style="clear: both; padding: 10px 0 20px;"><%= link_to '日程を作成する（※管理者用）', new_schedule_path, { class: "btn-border" } %></div>
+<% end %>  
+<script>
+ function copyToClipboard() {
+      // コピー対象をJavaScript上で変数として定義する
+      var copyTarget = document.getElementById("copyTarget");
+
+      // コピー対象のテキストを選択する
+      copyTarget.select();
+
+      // 選択しているテキストをクリップボードにコピーする
+      document.execCommand("Copy");
+
+      // コピーをお知らせする
+      alert("コピーできました！ : " + copyTarget.value);
+ }
+</script>
+<script src="https://www.line-website.com/social-plugins/js/thirdparty/loader.min.js" async="async" defer="defer"></script>

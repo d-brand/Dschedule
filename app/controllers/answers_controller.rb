@@ -6,9 +6,17 @@ class AnswersController < ApplicationController
   # GET /answers
   # GET /answers.json
   def index
-    redirect_to '/schedules'
-    @answers = Answer.all
-
+    begin
+      redirect_to '/schedules'
+      @answers = Answer.all
+    rescue LoadError
+      render plain:"一度ブラウザを閉じて再度お試してください。"
+    rescue => e
+      p e
+      p e.class # 例外の種類
+      p e.message
+      render plain: "システム管理者にお手数ですが発生した内容をご連絡ください。(連絡先:info＠d-brand.jp)"
+    end
   end
 
   # GET /answers/1
@@ -29,59 +37,104 @@ class AnswersController < ApplicationController
   # POST /answers
   # POST /answers.json
   def create
-    @answer = Answer.new(answer_params)
-
-    respond_to do |format|
-      if @answer.save
-        #format.html { redirect_to :action=>"show", :controller=>"schedules", :id=>@answer.schedule_id,notice: '出欠を登録しました。' }
-        format.html { redirect_to schedule_path(id:@answer.schedule_id, access_token: params[:access_token]),notice: '出欠を登録しました。' }
-        format.json { render :show, status: :created, location: @answer }
-      else
-        format.html { redirect_to schedules_url, notice: '名前が記入されていません。' }
-        format.json { render json: @answer.errors, status: :unprocessable_entity }
+    begin
+      @answer = Answer.new(answer_params)
+      respond_to do |format|
+        if @answer.save
+          #format.html { redirect_to :action=>"show", :controller=>"schedules", :id=>@answer.schedule_id,notice: '出欠を登録しました。' }
+          format.html { redirect_to schedule_path(id:@answer.schedule_id, access_token: params[:access_token]),notice: '出欠を登録しました。' }
+          format.json { render :show, status: :created, location: @answer }
+        else
+          format.html { redirect_to schedules_url, notice: '名前が記入されていません。' }
+          format.json { render json: @answer.errors, status: :unprocessable_entity }
+        end
       end
+    rescue LoadError
+      render plain:"一度ブラウザを閉じて再度お試してください。"
+    rescue => e
+      p e
+      p e.class # 例外の種類
+      p e.message
+      render plain: "システム管理者にお手数ですが発生した内容をご連絡ください。(連絡先:info＠d-brand.jp)"
     end
   end
 
   # PATCH/PUT /answers/1
   # PATCH/PUT /answers/1.json
   def update
-    respond_to do |format|
-      if @answer.update(answer_params)
-        format.html { redirect_to @answer, notice: '出欠を更新しました。' }
-        format.json { render :show, status: :ok, location: @answer }
-      else
-        format.html { render :edit }
-        format.json { render json: @answer.errors, status: :unprocessable_entity }
+    begin
+      respond_to do |format|
+        if @answer.update(answer_params)
+          format.html { redirect_to @answer, notice: '出欠を更新しました。' }
+          format.json { render :show, status: :ok, location: @answer }
+        else
+          format.html { render :edit }
+          format.json { render json: @answer.errors, status: :unprocessable_entity }
+        end
       end
+    rescue LoadError
+      render plain:"一度ブラウザを閉じて再度お試してください。"
+    rescue => e
+      p e
+      p e.class # 例外の種類
+      p e.message
+      render plain: "システム管理者にお手数ですが発生した内容をご連絡ください。(連絡先:info＠d-brand.jp)"
     end
   end
 
   # DELETE /answers/1
   # DELETE /answers/1.json
   def destroy
-    @answer.destroy
-    respond_to do |format|
-      if current_user.present?
-        format.html { redirect_to schedules_url, notice: '登録が削除されました。' }
-      else
-        format.html { redirect_to schedule_path(id:@answer.schedule_id, access_token: params[:access_token]),notice: '登録が削除されました。' }
+    begin
+      @answer.destroy
+      respond_to do |format|
+        if current_user.present?
+          format.html { redirect_to schedules_url, notice: '登録が削除されました。' }
+        else
+          format.html { redirect_to schedule_path(id:@answer.schedule_id, access_token: params[:access_token]),notice: '登録が削除されました。' }
+        end
+        format.json { head :no_content }
       end
-      format.json { head :no_content }
+    rescue LoadError
+      render plain:"一度ブラウザを閉じて再度お試してください。"
+    rescue => e
+      p e
+      p e.class # 例外の種類
+      p e.message
+      render plain: "システム管理者にお手数ですが発生した内容をご連絡ください。(連絡先:info＠d-brand.jp)"
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_answer
-      @answer = Answer.find(params[:id])
-      
+      begin
+        @answer = Answer.find(params[:id])
+
+      rescue LoadError
+        p "一度ブラウザを閉じて再度お試してください。"
+      rescue => e
+        p e
+        p e.class # 例外の種類
+        p e.message
+        p  plain:"システム管理者にお手数ですが発生した内容をご連絡ください。(連絡先:info＠d-brand.jp)"
+      end
     end
 
     def token_check
-      if Teamcore.find_by(access_token:session[:access_token] )
-      else
-        redirect_to new_schedule_path, notice: 'ログインが必要です' 
+      begin
+        if Teamcore.find_by(access_token:session[:access_token] )
+          session[:access_token] = params[:access_token]
+        else
+          redirect_to root_path, notice: 'ログインが必要です' 
+        end
+      rescue LoadError
+        render plain:"一度ブラウザを閉じて再度お試してください。"
+      rescue => e
+        p e
+        p e.class # 例外の種類
+        p e.message
+        render plain: "システム管理者にお手数ですが発生した内容をご連絡ください。(連絡先:info＠d-brand.jp)"
       end
     end
 
