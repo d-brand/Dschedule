@@ -26,7 +26,7 @@ class SchedulesController < ApplicationController
       @answer = Answer.new
       @answer.schedule_id = params[:id]
     rescue LoadError
-      p "一度ブラウザを閉じて再度お試してください。"
+      render plain: "一度ブラウザを閉じて再度お試してください。"
     rescue => e
       p e
       p e.class # 例外の種類
@@ -78,7 +78,11 @@ class SchedulesController < ApplicationController
         #@caution = '※チーム毎でサイト管理している為、パスワードを設けておりません。チーム幹事のみ編集してください。'
       end
     rescue LoadError
-      p "一度ブラウザを閉じて再度お試してください。"
+      render plain: "一度ブラウザを閉じて再度お試してください。"
+
+    rescue ActiveRecord::RecordNotFound => e
+      redirect_to schedules_path, notice: '先ほどアクセスしたページは存在しませんでした。'
+
     rescue => e
       p e
       p e.class # 例外の種類
@@ -106,7 +110,7 @@ class SchedulesController < ApplicationController
       logger.debug @kizonschedule.inspect
       logger.debug "--------"
     rescue LoadError
-      p "一度ブラウザを閉じて再度お試してください。"
+      render plain: "一度ブラウザを閉じて再度お試してください。"
     rescue => e
       p e
       p e.class # 例外の種類
@@ -136,7 +140,7 @@ class SchedulesController < ApplicationController
         end
       end
     rescue LoadError
-      p "一度ブラウザを閉じて再度お試してください。"
+      render plain: "一度ブラウザを閉じて再度お試してください。"
     rescue => e
       p e
       p e.class # 例外の種類
@@ -159,8 +163,11 @@ class SchedulesController < ApplicationController
           format.json { render json: @schedule.errors, status: :unprocessable_entity }
         end
       end
+    
     rescue LoadError
-      p "一度ブラウザを閉じて再度お試してください。"
+      render plain: "一度ブラウザを閉じて再度お試してください。"
+    rescue ActiveRecord::RecordNotFound => e
+      redirect_to edit_schedule_path(@schedule), notice: '先ほどアクセスしたページは存在しませんでした。'
     rescue => e
       p e
       p e.class # 例外の種類
@@ -179,7 +186,11 @@ class SchedulesController < ApplicationController
         format.json { head :no_content }
       end
     rescue LoadError
-      p "一度ブラウザを閉じて再度お試してください。"
+      render plain: "一度ブラウザを閉じて再度お試してください。"
+
+    rescue ActiveRecord::RecordNotFound => e
+      redirect_to schedule_path(@schedule), notice: '先ほどアクセスしたページは存在しませんでした。'
+
     rescue => e
       p e
       p e.class # 例外の種類
@@ -215,7 +226,7 @@ class SchedulesController < ApplicationController
           end
         end
       rescue LoadError
-        p "一度ブラウザを閉じて再度お試してください。"
+        render plain: "一度ブラウザを閉じて再度お試してください。"
       rescue => e
         p e
         p e.class # 例外の種類
@@ -228,7 +239,9 @@ class SchedulesController < ApplicationController
       begin
         @schedule = Schedule.find(params[:id])
       rescue LoadError
-        p "一度ブラウザを閉じて再度お試してください。"
+        render plain: "一度ブラウザを閉じて再度お試してください。"
+      rescue ActiveRecord::RecordNotFound => e
+        redirect_to new_schedule_path, notice: '先ほどアクセスしたページは存在しませんでした。'
       rescue => e
         p e
         p e.class # 例外の種類
@@ -248,7 +261,7 @@ class SchedulesController < ApplicationController
             end
         end
        rescue LoadError
-          p "一度ブラウザを閉じて再度お試してください。"
+          render plain: "一度ブラウザを閉じて再度お試してください。"
        rescue => e
           p e
           p e.class # 例外の種類
@@ -266,10 +279,11 @@ class SchedulesController < ApplicationController
         if Teamcore.find_by(access_token:session[:access_token] )
           session[:access_token] = params[:access_token]
         else
-          redirect_to root_path, notice: 'ログインが必要です' 
+          #redirect_to root_path, notice: 'ログインが必要です' 
+          render plain:"誤ったURLにアクセスされました。一度グループ管理者にご連絡ください。"
         end
       rescue LoadError
-        p "一度ブラウザを閉じて再度お試してください。"
+        render plain: "一度ブラウザを閉じて再度お試してください。"
       rescue => e
         p e
         p e.class # 例外の種類
@@ -287,7 +301,7 @@ class SchedulesController < ApplicationController
           return true
         end
       rescue LoadError
-        p "一度ブラウザを閉じて再度お試してください。"
+        render plain: "一度ブラウザを閉じて再度お試してください。"
       rescue => e
         p e
         p e.class # 例外の種類

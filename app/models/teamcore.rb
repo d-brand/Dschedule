@@ -2,7 +2,7 @@ class Teamcore < ApplicationRecord
   validates_uniqueness_of :access_token
   validates_presence_of :access_token
   after_initialize :set_access_token, if: :new_record?
-
+  validates :teamname, presence: true
   belongs_to :user,dependent: :destroy
   has_many :schedules, dependent: :destroy
 

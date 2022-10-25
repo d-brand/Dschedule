@@ -39,11 +39,13 @@
           <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
         </nav>
        <% end %>
+
         <% flash.each do |message_type, message| %>
         <font color="#B2D235"><b>
           <%= content_tag :div, message, class: message_type %>
         </b></font>
         <% end %>
+
        <div id="column"><%= yield %></div>
   <% else %>
 
@@ -52,13 +54,14 @@
     <% else %>
       <header><h1>スケジュール調整</h1></header>
     <% end %>
+
     <% flash.each do |message_type, message| %>
          <font color="#B2D235"><b>
           <%= content_tag :div, message, class: message_type %>
         </b></font>
     <% end %>
-    <div id="column"><%= yield %></div>
 
+    <div id="column"><%= yield %></div>
   <% end %>
   
   <footer>&copy;2022 D Brand Co.,Ltd.<span><%= link_to 'ご利用規約', kiyaku_index_path, { class: "tar" } %></span></footer>

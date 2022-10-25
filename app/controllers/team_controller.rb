@@ -8,12 +8,12 @@ class TeamController < ApplicationController
       @teamInfo=Teamcore.find_by(user_id:current_user.id)
       @userInfo=User.find(current_user.id)
     rescue LoadError
-      p "一度ブラウザを閉じて再度お試してください。"
+      render plain:"一度ブラウザを閉じて再度お試してください。"
     rescue => e
       p e
       p e.class # 例外の種類
       p e.message
-      p "システム管理者にお手数ですが発生した内容をご連絡ください。(連絡先:info＠d-brand.jp)"
+      prender plain: "システム管理者にお手数ですが発生した内容をご連絡ください。(連絡先:info＠d-brand.jp)"
      end
   end
 
@@ -37,16 +37,20 @@ class TeamController < ApplicationController
       
       if request.post? then
         team=Teamcore.create(team_params)
+      else
+        flash[:notice] = "グループ名が空欄です。必ず入力してください。"
+        render :new
       end
+
       redirect_to :action=>"index", :controller=>"schedules"
       #team_path(team)
     rescue LoadError
-      p "一度ブラウザを閉じて再度お試してください。"
+      render plain:"一度ブラウザを閉じて再度お試してください。"
     rescue => e
       p e
       p e.class # 例外の種類
       p e.message
-      p "システム管理者にお手数ですが発生した内容をご連絡ください。(連絡先:info＠d-brand.jp)"
+      render plain:"システム管理者にお手数ですが発生した内容をご連絡ください。(連絡先:info＠d-brand.jp)"
     end
 
   end
@@ -60,15 +64,18 @@ class TeamController < ApplicationController
       if @team.update(team_params)
         redirect_to :action=>"index", :controller=>"schedules" 
       else
-        redirect_to :action=>"index", :controller=>"schedules"
+        flash[:notice] = "グループ名が空欄です。必ず入力してください。"
+        redirect_to edit_team_path(@team)
       end
     rescue LoadError
-      p "一度ブラウザを閉じて再度お試してください。"
+      render plain:"一度ブラウザを閉じて再度お試してください。"
+    rescue ActiveRecord::RecordNotFound => e
+      redirect_to edit_team_path(@team), notice: '先ほどアクセスしたページは存在しませんでした。'
     rescue => e
       p e
       p e.class # 例外の種類
       p e.message
-      p "システム管理者にお手数ですが発生した内容をご連絡ください。(連絡先:info＠d-brand.jp)"
+      render plain:"システム管理者にお手数ですが発生した内容をご連絡ください。(連絡先:info＠d-brand.jp)"
     end
   end
 

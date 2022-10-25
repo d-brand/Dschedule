@@ -33,8 +33,7 @@
                     <% end %>
                     <br>
                     <% if @token %>
-                        <input type="hidden" id="copyTarget" type="text" size="62" value="<%= request.url + "?access_token=#{@token.access_token}"%>" readonly >
-                        <button onclick="copyToClipboard()">イベントのURLをコピー</button>
+                        <button onclick="copyToClipboard1(copyTarget1)">イベントのURLをコピー</button>
                     <% end %>
                 </td>
                 <td class="border_tl" colspan="4"><%= simple_format schedule.addcomment %></td>
@@ -72,6 +71,7 @@
         <% end %>
     </table>
      <% if @token %>
+          <div><input id="copyTarget1" type="text" size="60" value="<%= request.url + "?access_token=#{@token.access_token}"%>" readonly ></div>
          <div style="clear: both; padding: 10px 0 20px;"><%= link_to '日程を作成する（※管理者用）', new_schedule_path, { class: "btn-border" } %></div>
       <% end %>  
 </div>
@@ -140,15 +140,24 @@
  function copyToClipboard() {
       // コピー対象をJavaScript上で変数として定義する
       var copyTarget = document.getElementById("copyTarget");
-
       // コピー対象のテキストを選択する
       copyTarget.select();
-
       // 選択しているテキストをクリップボードにコピーする
       document.execCommand("Copy");
-
       // コピーをお知らせする
       alert("コピーできました！ : " + copyTarget.value);
+ }
+</script>
+<script>
+ function copyToClipboard1() {
+          // コピー対象をJavaScript上で変数として定義する
+      var copyTarget1 = document.getElementById("copyTarget1");
+      // コピー対象のテキストを選択する
+      copyTarget1.select();
+      // 選択しているテキストをクリップボードにコピーする
+      document.execCommand("Copy");
+      // コピーをお知らせする
+      alert("コピーできました！ : " + copyTarget1.value);
  }
 </script>
 <script src="https://www.line-website.com/social-plugins/js/thirdparty/loader.min.js" async="async" defer="defer"></script>
