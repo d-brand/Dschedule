@@ -28,15 +28,15 @@
       <% if !@team.nil? %>
         <header><h1><%=@team.teamname%></h1></header>
         <nav>
-          <%= link_to 'プロフィール変更', edit_user_registration_path %>
-          <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
-          <%= link_to 'グループ名変更',  edit_team_path(@team) %>
+          <div style="padding: 10px 0 20px; margin:0 5px 0 23px; "><%= link_to 'プロフィール変更', edit_user_registration_path,{ class: "btn-border-profile" }  %></div>
+          <div style="padding: 10px 0 20px; margin:0 5px 0 0; "><%= link_to 'グループ名変更',  edit_team_path(@team) ,{ class: "btn-border-groupname" }  %></div>
+          <div style="padding: 10px 0 20px; margin:0 5px 0 0; "><%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: "btn-border-logout"%></div>
         </nav>
       <% else %>
        <header><h1>マスター管理画面</h1></header>
         <nav>
-          <%= link_to 'プロフィール変更', edit_user_registration_path %>
-          <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
+          <div style="clear: both; padding: 10px 0 20px; margin:0 5px 0 23px;"><%= link_to 'プロフィール変更', edit_user_registration_path,{ class: "btn-border-profile" }  %></div>
+          <div style="clear: both; padding: 10px 0 20px; margin:0 5px 0 0;"><%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: "btn-border-logout"%></div>
         </nav>
        <% end %>
 
@@ -63,7 +63,8 @@
 
     <div id="column"><%= yield %></div>
   <% end %>
-  
-  <footer>&copy;2022 D Brand Co.,Ltd.<span><%= link_to 'ご利用規約', kiyaku_index_path, { class: "tar" } %></span></footer>
+   <!--<footer>&copy;<script>new Date().getFullYear()>document.write(new Date().getFullYear());</script>,D Brand Co.,Ltd.<span><%= link_to 'ご利用規約', kiyaku_index_path, { class: "tar" } %></span></footer>-->
+   <footer>&copy;2022,D Brand Co.,Ltd.<span><%= link_to 'ご利用規約', kiyaku_index_path, { class: "tar" } %></span></footer>
+
   </body>
 </html>

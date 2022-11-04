@@ -23,6 +23,7 @@ class TeamController < ApplicationController
   
   def edit
     @team=Teamcore.find(params[:id])
+    @teamtoken=@team.set_access_token
   end
   
   def show
@@ -67,7 +68,7 @@ class TeamController < ApplicationController
         flash[:notice] = "グループ名が空欄です。必ず入力してください。"
         redirect_to edit_team_path(@team)
       end
-    rescue LoadError
+   rescue LoadError
       render plain:"一度ブラウザを閉じて再度お試してください。"
     rescue ActiveRecord::RecordNotFound => e
       redirect_to edit_team_path(@team), notice: '先ほどアクセスしたページは存在しませんでした。'
@@ -79,10 +80,24 @@ class TeamController < ApplicationController
     end
   end
 
+  def token_generte
+    @team=Teamcore.find(params[:id])
+    @update_token=@team.generate_access_token
+    logger.debug "-------"
+    logger.debug @update_token.inspect
+    logger.debug "-------"
+    if Teamcore.update(access_token: @update_token)
+      flash[:notice] = "グループURLが変更されました"
+      redirect_to :action=>"index", :controller=>"schedules"
+    end
+  end
 
   private
   def team_params
     params.require(:teamcore).permit(:teamname,:user_id)
+  end
+  def teamtoken_params
+    params.require(:teamcore).permit(:user_id,:access_token)
   end
 
 end

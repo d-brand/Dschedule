@@ -5,4 +5,8 @@
         <%=f.hidden_field :user_id, :value => current_user.id %>
         <%= f.submit "保存"%>
     <% end %>
-     <div style="clear: both; padding-top: 10px;"><%= link_to "戻る", :back, { class: "btn-border" } %></div>
+     <div style="clear: both; padding-top: 10px;"><%= link_to "戻る", 'javascript:history.back()', { class: "btn-border" } %></div>
+     <div style="clear: both; padding-top: 20px;">
+        <%= button_to "グループURLの変更", {controller: "team", action: "token_generte",id: @team.id }, data:{confirm: '本当にグループURLの変更を実行してもいいですか'}, class: "urlgen_btn-border" %>
+     </div>
+     <p>グループURLの変更を実行すると前回のグループURLに戻すことはできません。<br>ご注意ください。</p>

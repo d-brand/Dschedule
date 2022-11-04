@@ -103,6 +103,9 @@ class SchedulesController < ApplicationController
 
       if @schedules.present?
         @kizonschedule = Schedule.where("schedules.user_id=? and schedules.ymd > ?",current_user.id,Time.current.yesterday).reorder(:ymd).first
+          if !@kizonschedule.present?
+            @kizonschedule = 0
+          end
       else
         @kizonschedule = 0
       end
@@ -280,15 +283,10 @@ class SchedulesController < ApplicationController
           session[:access_token] = params[:access_token]
         else
           #redirect_to root_path, notice: 'ログインが必要です' 
-          render plain:"誤ったURLにアクセスされました。一度グループ管理者にご連絡ください。"
+          render file:"errors/error_404_user"
         end
       rescue LoadError
         render plain: "一度ブラウザを閉じて再度お試してください。"
-      rescue => e
-        p e
-        p e.class # 例外の種類
-        p e.message
-        render plain:"システム管理者にお手数ですが発生した内容をご連絡ください。(連絡先:info＠d-brand.jp)"
       end
     end
 
@@ -302,11 +300,6 @@ class SchedulesController < ApplicationController
         end
       rescue LoadError
         render plain: "一度ブラウザを閉じて再度お試してください。"
-      rescue => e
-        p e
-        p e.class # 例外の種類
-        p e.message
-        p "システム管理者にお手数ですが発生した内容をご連絡ください。(連絡先:info＠d-brand.jp)"
       end
     end
     

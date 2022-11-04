@@ -4,7 +4,6 @@
         <div>グループURL:
             <input id="copyTarget" type="text" size="62" value="<%= schedules_url+ "?access_token=#{@token.access_token}"%>" readonly >
             <button onclick="copyToClipboard()">イベントのURLをコピー</button>
-            <input type="button" value="LINE共有ボタンを表示する" onclick="window.location.reload();" />
         </div>
         <div class="line-it-button" data-lang="ja" data-type="share-a" data-env="REAL" data-url="<%= schedules_url + "?access_token=#{@token.access_token}"%>" data-color="default" data-size="large" data-count="true" data-ver="3" style="display: none;"></div>
       <% end %>  
@@ -33,7 +32,8 @@
                     <% end %>
                     <br>
                     <% if @token %>
-                        <button onclick="copyToClipboard1(copyTarget1)">イベントのURLをコピー</button>
+                        <input id="copyTarget1" type="hidden"value="<%= schedule_url + "?access_token=#{@token.access_token}"%>">
+                        <button onclick="copyToClipboard1(copyTarget1)">このイベントURLをコピー</button>
                     <% end %>
                 </td>
                 <td class="border_tl" colspan="4"><%= simple_format schedule.addcomment %></td>
@@ -71,7 +71,6 @@
         <% end %>
     </table>
      <% if @token %>
-          <div><input id="copyTarget1" type="text" size="60" value="<%= request.url + "?access_token=#{@token.access_token}"%>" readonly ></div>
          <div style="clear: both; padding: 10px 0 20px;"><%= link_to '日程を作成する（※管理者用）', new_schedule_path, { class: "btn-border" } %></div>
       <% end %>  
 </div>
@@ -147,17 +146,11 @@
       // コピーをお知らせする
       alert("コピーできました！ : " + copyTarget.value);
  }
-</script>
-<script>
- function copyToClipboard1() {
-          // コピー対象をJavaScript上で変数として定義する
-      var copyTarget1 = document.getElementById("copyTarget1");
-      // コピー対象のテキストを選択する
-      copyTarget1.select();
-      // 選択しているテキストをクリップボードにコピーする
-      document.execCommand("Copy");
+ async function copyToClipboard1(copyTarget1) {
+      // コピー対象をJavaScript上で変数として定義する
+      var copyTarget1 = await navigator.clipboard.writeText((copyTarget1).value);
       // コピーをお知らせする
-      alert("コピーできました！ : " + copyTarget1.value);
+      alert("コピーできました！");
  }
 </script>
 <script src="https://www.line-website.com/social-plugins/js/thirdparty/loader.min.js" async="async" defer="defer"></script>

@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   # get "/" => "schedules#index"
   get 'login', to: 'home#index'
   resources :team
+  post 'token_generte', to: 'team#token_generte'
   resources :answers
   resources :schedules
   resources :kiyaku

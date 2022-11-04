@@ -8,6 +8,10 @@ body, p, ol, ul, td {
   font-size: 13px;
   line-height: 18px; }
 
+nav{
+    display: flex;
+ }
+
 pre {
   background-color: #eee;
   padding: 10px;
@@ -16,8 +20,8 @@ pre {
 a {
   color: #000; }
 
-a:visited {
-  color: #000; }
+// a:visited {
+//   color: #000; }
 
 a:hover {
   color: #fff;
