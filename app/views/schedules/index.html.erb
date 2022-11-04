@@ -6,7 +6,6 @@
         <div>グループURL:
             <input id="copyTarget" type="text" size="62" value="<%= schedules_url + "?access_token=#{@token.access_token}"%>" readonly >
             <button onclick="copyToClipboard()">イベントのURLをコピー</button>
-            <input type="button" value="LINE共有ボタンを表示する" onclick="window.location.reload();" />
         </div>
         <div class="line-it-button" data-lang="ja" data-type="share-a" data-env="REAL" data-url="<%= schedules_url + "?access_token=#{@token.access_token}"%>" data-color="default" data-size="large" data-count="true" data-ver="3" style="display: none;"></div>
       <% end %>  
