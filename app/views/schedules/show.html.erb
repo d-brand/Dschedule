@@ -26,9 +26,9 @@
                     <% weeks = ["月","火","水","木","金","土","日"] %>
                     <% index = schedule.ymd.strftime("%u").to_i %>
                     <% if user_signed_in? %>
-                        <%= link_to schedule.ymd.strftime("%Y年%m月%d日(#{weeks[index - 1]})"), schedule %><br><%= schedule.start.strftime('%H:%M') %> ～ <%= schedule.end.strftime('%H:%M') %><br><%= schedule.place %>
+                        <%= link_to schedule.ymd.strftime("%Y年%m月%d日(#{weeks[index - 1]})"), schedule_path(id:schedule.id,teamcores_teamname: @team.teamname) %><br><%= schedule.start.strftime('%H:%M') %> ～ <%= schedule.end.strftime('%H:%M') %><br><%= schedule.place %>
                     <% else %>
-                        <%= link_to schedule.ymd.strftime("%Y年%m月%d日(#{weeks[index - 1]})"), schedule_path(id:schedule.id, access_token: params[:access_token]) %><br><%= schedule.start.strftime('%H:%M') %> ～ <%= schedule.end.strftime('%H:%M') %><br><%= schedule.place %>
+                        <%= link_to schedule.ymd.strftime("%Y年%m月%d日(#{weeks[index - 1]})"), schedule_path(id:schedule.id, access_token: params[:access_token],teamcores_teamname: @team.teamname) %><br><%= schedule.start.strftime('%H:%M') %> ～ <%= schedule.end.strftime('%H:%M') %><br><%= schedule.place %>
                     <% end %>
                     <br>
                     <% if @token %>
@@ -50,9 +50,9 @@
                     <% weeks = ["月","火","水","木","金","土","日"] %>
                     <% index = schedule.ymd.strftime("%u").to_i %>
                     <% if user_signed_in? %>
-                        <%= link_to schedule.ymd.strftime("%Y年%m月%d日(#{weeks[index - 1]})"), schedule %><br><%= schedule.start.strftime('%H:%M') %> ～ <%= schedule.end.strftime('%H:%M') %><br><%= schedule.place %>
+                        <%= link_to schedule.ymd.strftime("%Y年%m月%d日(#{weeks[index - 1]})"), schedule_path(id:schedule.id,teamcores_teamname: @team.teamname) %><br><%= schedule.start.strftime('%H:%M') %> ～ <%= schedule.end.strftime('%H:%M') %><br><%= schedule.place %>
                     <% else %>
-                        <%= link_to schedule.ymd.strftime("%Y年%m月%d日(#{weeks[index - 1]})"), schedule_path(id:schedule.id, access_token: params[:access_token]) %><br><%= schedule.start.strftime('%H:%M') %> ～ <%= schedule.end.strftime('%H:%M') %><br><%= schedule.place %>
+                        <%= link_to schedule.ymd.strftime("%Y年%m月%d日(#{weeks[index - 1]})"), schedule_path(id:schedule.id, access_token: params[:access_token],teamcores_teamname: @team.teamname) %><br><%= schedule.start.strftime('%H:%M') %> ～ <%= schedule.end.strftime('%H:%M') %><br><%= schedule.place %>
                     <% end %>
 
                 </td>
@@ -71,7 +71,7 @@
         <% end %>
     </table>
      <% if @token %>
-         <div style="clear: both; padding: 10px 0 20px;"><%= link_to '日程を作成する（※管理者用）', new_schedule_path, { class: "btn-border" } %></div>
+         <div style="clear: both; padding: 10px 0 20px;"><%= link_to '日程を作成する（※管理者用）', new_schedule_path(teamcores_teamname:@team.teamname), { class: "btn-border" } %></div>
       <% end %>  
 </div>
 

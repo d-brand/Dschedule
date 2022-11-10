@@ -7,7 +7,7 @@ class HomeController < ApplicationController
     def top
         if user_signed_in?
           #session[:filter_tags] = nil
-          redirect_to schedules_path
+          redirect_to schedules_path(teamcores_teamname: @team.teamname)
         else
           redirect_to root_path
         end 

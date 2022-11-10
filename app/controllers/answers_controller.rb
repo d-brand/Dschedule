@@ -1,6 +1,7 @@
 class AnswersController < ApplicationController
   before_action :set_answer, only: [:show, :edit, :update, :destroy]
   before_action :token_check,if: :login_kaku
+  before_action :team_name
 
 
   # GET /answers
@@ -41,11 +42,10 @@ class AnswersController < ApplicationController
       @answer = Answer.new(answer_params)
       respond_to do |format|
         if @answer.save
-          #format.html { redirect_to :action=>"show", :controller=>"schedules", :id=>@answer.schedule_id,notice: '出欠を登録しました。' }
-          format.html { redirect_to schedule_path(id:@answer.schedule_id, access_token: params[:access_token]),notice: '出欠を登録しました。' }
+          format.html { redirect_to schedule_path(id:@answer.schedule_id, access_token: params[:access_token],teamcores_teamname: @team.teamname),notice: '出欠を登録しました。' }
           format.json { render :show, status: :created, location: @answer }
         else
-          format.html { redirect_to schedules_url, notice: '名前が記入されていません。' }
+          format.html { redirect_to schedule_path(id:@answer.schedule_id, access_token: params[:access_token],teamcores_teamname: @team.teamname), notice: '名前が記入されていません。' }
           format.json { render json: @answer.errors, status: :unprocessable_entity }
         end
       end
@@ -89,9 +89,9 @@ class AnswersController < ApplicationController
       @answer.destroy
       respond_to do |format|
         if current_user.present?
-          format.html { redirect_to schedules_url, notice: '登録が削除されました。' }
+          format.html { redirect_to schedule_path(id:@answer.schedule_id,teamcores_teamname: @team.teamname), notice: '登録が削除されました。' }
         else
-          format.html { redirect_to schedule_path(id:@answer.schedule_id, access_token: params[:access_token]),notice: '登録が削除されました。' }
+          format.html { redirect_to schedule_path(id:@answer.schedule_id, access_token: params[:access_token],teamcores_teamname: @team.teamname),notice: '登録が削除されました。' }
         end
         format.json { head :no_content }
       end
@@ -137,6 +137,30 @@ class AnswersController < ApplicationController
         render plain: "システム管理者にお手数ですが発生した内容をご連絡ください。(連絡先:info＠d-brand.jp)"
       end
     end
+
+    def team_name
+      begin
+        if current_user.nil?
+          @workguest='ゲストログイン'
+        end
+        if @workguest.present?
+            @team=Teamcore.find_by(access_token:session[:access_token] )
+          else
+            @team =Teamcore.find_by(user_id:current_user.id)
+            if @team.nil?
+              @team=0
+            end
+        end
+       rescue LoadError
+          render plain: "一度ブラウザを閉じて再度お試してください。"
+       rescue => e
+          p e
+          p e.class # 例外の種類
+          p e.message
+          render plain: "システム管理者にお手数ですが発生した内容をご連絡ください。(連絡先:info＠d-brand.jp)"
+       end
+    end
+
 
     def login_kaku
       unless current_user

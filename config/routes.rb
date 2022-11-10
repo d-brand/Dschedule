@@ -11,7 +11,10 @@ Rails.application.routes.draw do
   resources :team
   post 'token_generte', to: 'team#token_generte'
   resources :answers
-  resources :schedules
+  scope '/:teamcores_teamname' do
+    resources :schedules
+  end
+  #resources :schedules
   resources :kiyaku
   # registrations_controller.rbを有効にします。
   devise_for :users, controllers: {

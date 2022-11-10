@@ -1,5 +1,39 @@
 <h1>イベントを編集する</h1>
 
-<%= render 'form', schedule: @schedule %>
+<%= form_with(model: @schedule,url: schedule_path(teamcores_teamname: @team.teamname), local: true) do |form| %>
+  <% if @schedule.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@schedule.errors.count, "つのエラー") %> のためスケジュールを保存できませんでした。:</h2>
 
-<div style="clear: both; padding-top: 20px;"><%= link_to '編集画面に戻る', new_schedule_path, { class: "btn-border" } %></div>
+      <ul>
+        <% @schedule.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <table cellspacing="0" cellpadding="0">
+    <tr>
+        <th class="border_n" align="center" bgcolor="#e0e0e0">開催日時</th>
+        <th class="border_l" align="center" bgcolor="#e0e0e0">開始時間</th>
+        <th class="border_l" align="center" bgcolor="#e0e0e0">終了時間</th>
+        <th class="border_l" align="center" bgcolor="#e0e0e0">開催場所</th>
+        <th class="border_l" align="center" bgcolor="#e0e0e0">詳細</th>
+        <th colspan="3" class="border_l" align="center" bgcolor="#e0e0e0">アクション</th>
+    </tr>
+    <tr>
+      <%= form.hidden_field :user_id, :value => current_user.id %>
+      <%= form.hidden_field :teamcore_id, :value => @team.id %>
+      <td class="border_t" align="center"><%= form.date_select :ymd, { class: "btn-border" } %></td>
+      <td class="border_tl" align="center"><%= form.time_select :start, {default: Date.today + 9.hour} %></td>
+      <td class="border_tl" align="center"><%= form.time_select :end, {default: Date.today + 13.hour} %></td>
+      <td class="border_tl" align="center"><%= form.text_field :place %></td>
+      <td class="border_tl" align="center"><%= form.text_area :addcomment %></td>
+      <td class="border_tl" align="center"><%= form.submit %></td>
+    </tr>
+</table>
+
+<% end %>
+
+
+<div style="clear: both; padding-top: 20px;"><%= link_to '編集画面に戻る', new_schedule_path(teamcores_teamname: @team.teamname), { class: "btn-border" } %></div>

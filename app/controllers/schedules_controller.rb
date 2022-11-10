@@ -81,7 +81,7 @@ class SchedulesController < ApplicationController
       render plain: "一度ブラウザを閉じて再度お試してください。"
 
     rescue ActiveRecord::RecordNotFound => e
-      redirect_to schedules_path, notice: '先ほどアクセスしたページは存在しませんでした。'
+      redirect_to schedules_path(teamcores_teamname: @team.teamname), notice: '先ほどアクセスしたページは存在しませんでした。'
 
     rescue => e
       p e
@@ -109,9 +109,6 @@ class SchedulesController < ApplicationController
       else
         @kizonschedule = 0
       end
-      logger.debug "--------"
-      logger.debug @kizonschedule.inspect
-      logger.debug "--------"
     rescue LoadError
       render plain: "一度ブラウザを閉じて再度お試してください。"
     rescue => e
@@ -131,24 +128,24 @@ class SchedulesController < ApplicationController
   # POST /schedules.json
   def create
     begin
-      @schedule = Schedule.new(schedule_params)
+      @schedule = Schedule.new(update_schedule_params)
 
       respond_to do |format|
         if @schedule.save
-          format.html { redirect_to new_schedule_path, notice: 'スケジュールが作成されました。' }
+          format.html { redirect_to new_schedule_path(teamcores_teamname: @team.teamname), notice: 'スケジュールが作成されました。' }
           format.json { render :show, status: :created, location: @schedule }
         else
-          format.html { redirect_to new_schedule_path, notice: '開催場所、もしくは詳細が記載されていません。' }
+          format.html { redirect_to new_schedule_path(teamcores_teamname: @team.teamname), notice: '開催場所、もしくは詳細が記載されていません。' }
           format.json { render json: @schedule.errors, status: :unprocessable_entity }
         end
       end
     rescue LoadError
       render plain: "一度ブラウザを閉じて再度お試してください。"
-    rescue => e
-      p e
-      p e.class # 例外の種類
-      p e.message
-      render plain: "システム管理者にお手数ですが発生した内容をご連絡ください。(連絡先:info＠d-brand.jp)"
+    # rescue => e
+    #   p e
+    #   p e.class # 例外の種類
+    #   p e.message
+    #   render plain: "システム管理者にお手数ですが発生した内容をご連絡ください。(連絡先:info＠d-brand.jp)"
     end
 
   end
@@ -158,8 +155,9 @@ class SchedulesController < ApplicationController
   def update
     begin
       respond_to do |format|
-        if @schedule.update(schedule_params)
-          format.html { redirect_to new_schedule_path, notice: 'スケジュールが更新されました。' }
+        # if @schedule.update(schedule_params)
+        if @schedule.update(update_schedule_params)
+          format.html { redirect_to new_schedule_path(@schedule,teamcores_teamname: @team.teamname), notice: 'スケジュールが更新されました。' }
           format.json { render :show, status: :ok, location: @schedule }
         else
           format.html { render :edit }
@@ -170,7 +168,7 @@ class SchedulesController < ApplicationController
     rescue LoadError
       render plain: "一度ブラウザを閉じて再度お試してください。"
     rescue ActiveRecord::RecordNotFound => e
-      redirect_to edit_schedule_path(@schedule), notice: '先ほどアクセスしたページは存在しませんでした。'
+      redirect_to edit_schedule_path(@schedule,teamcores_teamname: @team.teamname), notice: '先ほどアクセスしたページは存在しませんでした。'
     rescue => e
       p e
       p e.class # 例外の種類
@@ -185,14 +183,14 @@ class SchedulesController < ApplicationController
     begin
       @schedule.destroy
       respond_to do |format|
-        format.html { redirect_to new_schedule_path, notice: 'スケジュールが削除されました。' }
+        format.html { redirect_to new_schedule_path(teamcores_teamname: @team.teamname), notice: 'スケジュールが削除されました。' }
         format.json { head :no_content }
       end
     rescue LoadError
       render plain: "一度ブラウザを閉じて再度お試してください。"
 
     rescue ActiveRecord::RecordNotFound => e
-      redirect_to schedule_path(@schedule), notice: '先ほどアクセスしたページは存在しませんでした。'
+      redirect_to schedule_path(@schedule,teamcores_teamname: @team.teamname), notice: '先ほどアクセスしたページは存在しませんでした。'
 
     rescue => e
       p e
@@ -244,7 +242,7 @@ class SchedulesController < ApplicationController
       rescue LoadError
         render plain: "一度ブラウザを閉じて再度お試してください。"
       rescue ActiveRecord::RecordNotFound => e
-        redirect_to new_schedule_path, notice: '先ほどアクセスしたページは存在しませんでした。'
+        redirect_to new_schedule_path(teamcores_teamname: @team.teamname), notice: '先ほどアクセスしたページは存在しませんでした。'
       rescue => e
         p e
         p e.class # 例外の種類
@@ -306,6 +304,9 @@ class SchedulesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def schedule_params
+      params.require(:schedule).permit(:ymd, :start, :end, :place, :addcomment,:user_id,:teamcore_id).merge(teamcores_teamname: current_user.teamcore.teamname)
+    end
+    def update_schedule_params
       params.require(:schedule).permit(:ymd, :start, :end, :place, :addcomment,:user_id,:teamcore_id)
     end
 end

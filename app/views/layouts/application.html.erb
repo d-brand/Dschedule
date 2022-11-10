@@ -63,8 +63,7 @@
 
     <div id="column"><%= yield %></div>
   <% end %>
-   <!--<footer>&copy;<script>new Date().getFullYear()>document.write(new Date().getFullYear());</script>,D Brand Co.,Ltd.<span><%= link_to 'ご利用規約', kiyaku_index_path, { class: "tar" } %></span></footer>-->
-   <footer>&copy;2022,D Brand Co.,Ltd.<span><%= link_to 'ご利用規約', kiyaku_index_path, { class: "tar" } %></span></footer>
+   <footer>&copy;<%= "#{Time.current.year},D Brand Co.,Ltd."%> <span><%= link_to 'ご利用規約', kiyaku_index_path, { class: "tar" } %></span></footer>
 
   </body>
 </html>

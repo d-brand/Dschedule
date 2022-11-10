@@ -43,7 +43,7 @@ class TeamController < ApplicationController
         render :new
       end
 
-      redirect_to :action=>"index", :controller=>"schedules"
+      redirect_to schedules_path(teamcores_teamname: @team.teamname)
       #team_path(team)
     rescue LoadError
       render plain:"一度ブラウザを閉じて再度お試してください。"
@@ -63,7 +63,7 @@ class TeamController < ApplicationController
       
       @team=Teamcore.find(params[:id])
       if @team.update(team_params)
-        redirect_to :action=>"index", :controller=>"schedules" 
+        redirect_to schedules_path(teamcores_teamname: @team.teamname) 
       else
         flash[:notice] = "グループ名が空欄です。必ず入力してください。"
         redirect_to edit_team_path(@team)
@@ -83,12 +83,9 @@ class TeamController < ApplicationController
   def token_generte
     @team=Teamcore.find(params[:id])
     @update_token=@team.generate_access_token
-    logger.debug "-------"
-    logger.debug @update_token.inspect
-    logger.debug "-------"
     if Teamcore.update(access_token: @update_token)
       flash[:notice] = "グループURLが変更されました"
-      redirect_to :action=>"index", :controller=>"schedules"
+      redirect_to schedules_path(teamcores_teamname: @team.teamname)
     end
   end
 
