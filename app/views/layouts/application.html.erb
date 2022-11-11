@@ -26,7 +26,13 @@
   <body>
   <% if user_signed_in?%>
       <% if !@team.nil? %>
-        <header><h1><%=@team.teamname%></h1></header>
+      <%if current_page?(controller: "schedules", action: "index") ||current_page?(controller: "schedules", action: "show") %>
+        <div id= url_button>
+            <button onclick="copyToClipboard()">イベントのURLをコピー</button>
+        </div>
+      <% end %>
+        <header><h1><%=@team.teamname%></h1>
+        </header>
         <nav>
           <div style="padding: 10px 0 20px; margin:0 5px 0 23px; "><%= link_to 'プロフィール変更', edit_user_registration_path,{ class: "btn-border-profile" }  %></div>
           <div style="padding: 10px 0 20px; margin:0 5px 0 0; "><%= link_to 'グループ名変更',  edit_team_path(@team) ,{ class: "btn-border-groupname" }  %></div>
@@ -39,13 +45,6 @@
           <div style="clear: both; padding: 10px 0 20px; margin:0 5px 0 0;"><%= link_to 'ログアウト', destroy_user_session_path, method: :delete, class: "btn-border-logout"%></div>
         </nav>
        <% end %>
-
-        <% flash.each do |message_type, message| %>
-        <font color="#B2D235"><b>
-          <%= content_tag :div, message, class: message_type %>
-        </b></font>
-        <% end %>
-
        <div id="column"><%= yield %></div>
   <% else %>
 
@@ -56,14 +55,14 @@
     <% end %>
 
     <% flash.each do |message_type, message| %>
-         <font color="#B2D235"><b>
+         <font color="#50a649">
           <%= content_tag :div, message, class: message_type %>
-        </b></font>
+        </font>
     <% end %>
 
     <div id="column"><%= yield %></div>
   <% end %>
-   <footer>&copy;<%= "#{Time.current.year},D Brand Co.,Ltd."%> <span><%= link_to 'ご利用規約', kiyaku_index_path, { class: "tar" } %></span></footer>
+   <footer>&copy;<%= "#{Time.current.year}.,D Brand Co.,Ltd."%> <span><%= link_to 'ご利用規約', kiyaku_index_path, { class: "tar" } %></span></footer>
 
   </body>
 </html>

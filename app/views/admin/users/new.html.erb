@@ -1,3 +1,8 @@
+<% flash.each do |message_type, message| %>
+<font color="#50a649">
+  <%= content_tag :div, message, class: message_type %>
+</font>
+<% end %>
 <h1>新規アカウント作成</h1>
 <p id="notice"><%= notice %></p>
     <%=form_for( @user,url:admin_users_path, local: true) do |f| %>

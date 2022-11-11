@@ -1,3 +1,8 @@
+<% flash.each do |message_type, message| %>
+<font color="#50a649">
+  <%= content_tag :div, message, class: message_type %>
+</font>
+<% end %>
 <p>
     仮登録受け付けメールをご入力いただいたメールアドレス(<%= params[:email] %>)に送信しました。<br>
     記載のリンクにアクセスいただくことで本登録が完了となります。

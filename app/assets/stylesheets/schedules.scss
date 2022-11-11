@@ -26,7 +26,13 @@ footer{
     height: 23px;    
     padding: 23px;
 }
-
+#url_button{
+    display:flex;
+    float: right;
+    width: 739px;
+    height: 35px;
+    margin-top: 28px;
+}
 #column{
     margin: 23px;
     display: flow-root;

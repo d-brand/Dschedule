@@ -1,3 +1,8 @@
+<% flash.each do |message_type, message| %>
+<font color="#50a649">
+  <%= content_tag :div, message, class: message_type %>
+</font>
+<% end %>
 <h1> スケジュール調整</h1>
   <div style="clear: both; padding: 10px 0 20px;"><%= link_to "スケジュールの確認画面へ", new_user_session_path, {class: "btn-border" }%></div> <!-- ログイン画面に移行する -->
   <% if !user_signed_in? %>

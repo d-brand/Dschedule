@@ -1,3 +1,8 @@
+<% flash.each do |message_type, message| %>
+<font color="#50a649">
+  <%= content_tag :div, message, class: message_type %>
+</font>
+<% end %>
 <div class="notifications">
   <% flash.each do |key, value| %>
     <%= content_tag(:div, value, class: key) %>

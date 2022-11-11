@@ -1,13 +1,10 @@
-
 <h1>開催日程</h1>
 
 <div id="left_column">
      <% if @token %>
         <div>グループURL:
             <input id="copyTarget" type="text" size="62" value="<%= schedules_url + "?access_token=#{@token.access_token}"%>" readonly >
-            <button onclick="copyToClipboard()">イベントのURLをコピー</button>
         </div>
-        <div class="line-it-button" data-lang="ja" data-type="share-a" data-env="REAL" data-url="<%= schedules_url + "?access_token=#{@token.access_token}"%>" data-color="default" data-size="large" data-count="true" data-ver="3" style="display: none;"></div>
       <% end %>  
     <table cellspacing="0" cellpadding="0">
         <tr>
@@ -51,6 +48,11 @@
 </div>
 
 <div id="right_column">
+    <% flash.each do |message_type, message| %>
+    <font color="#50a649">
+    <%= content_tag :div, message, class: message_type %>
+    </font>
+    <% end %>
     <p>※出欠登録するには該当する日付をクリックしてください。</p>
 </div>
 <% if @token %>
@@ -71,4 +73,3 @@
       alert("コピーできました！ : " + copyTarget.value);
  }
 </script>
-<script src="https://www.line-website.com/social-plugins/js/thirdparty/loader.min.js" async="async" defer="defer"></script>
