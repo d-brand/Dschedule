@@ -43,8 +43,7 @@ class TeamController < ApplicationController
         render :new
       end
 
-      redirect_to schedules_path(teamcores_teamname: @team.teamname)
-      #team_path(team)
+      redirect_to schedules_path(teamcores_teamname: team.teamname)
     rescue LoadError
       render plain:"一度ブラウザを閉じて再度お試してください。"
     rescue => e
