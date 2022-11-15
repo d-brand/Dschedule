@@ -85,7 +85,7 @@ production:
   # Production depends on precompilation of packs prior to booting for performance.
   #render対応>>>>>
   #compile: false
-   compile:true
+   compile: true
 
   # Extract and emit a css file
   extract_css: true
