@@ -1,19 +1,19 @@
 databases:
-  - name: DBrand
-    databaseName: DBrand
-    user: dbrand_user
-    region: singapore
+  - name: dbrand_app
+    databaseName: dbrand_app
+    user: dbrandschedule
+    region: ohio
 
 services:
   - type: web
-    name: dbrandscedule
+    name: dbrand_app
     env: ruby
-    region: oregon
+    region: ohio
     plan: free
     buildCommand: "./bin/render-build.sh"
     startCommand: "bundle exec puma -C config/puma.rb"
     envVars:
-      - key: DATABASE_URL
+      - key: <%= ENV['DATABASE_URL'] %>
         fromDatabase:
-          name: DBrand
+          name: dbrandschedule
           property: connectionString
