@@ -13,3 +13,20 @@
  *= require_tree .
  *= require_self
  */
+ .box-other {
+    width:21.6vw;
+    border-top: 1px solid;
+    padding-top: 13px;
+    display: flex;
+ }
+ .box-other2 {
+    width:23.6vw;
+    border-top: 1px solid;
+    padding-top: 13px;
+    display: flex;
+ }
+ .box-newusr{
+   padding-bottom: 13px;
+
+ }
+ 

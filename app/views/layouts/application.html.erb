@@ -16,7 +16,7 @@
       <title>スケジュール調整</title>
     <%end%>
   <% end %>
-
+<%= favicon_link_tag('Dbrandfavicon.ico') %>
 <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
@@ -27,7 +27,7 @@
   <% if user_signed_in?%>
       <% if !@team.nil? %>
       <%if !current_page?(root_path)%>
-          <% if current_page?(controller: "schedules", action: "index") ||current_page?(controller: "schedules", action: "show") %>
+          <% if current_page?(schedules_path(teamcores_teamname: @team.teamname)) ||current_page?(schedule_path(teamcores_teamname: @team.teamname)) %>
             <div id= url_button>
                 <button onclick="copyToClipboard()">イベントのURLをコピー</button>
             </div>
