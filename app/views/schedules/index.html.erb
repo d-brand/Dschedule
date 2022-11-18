@@ -1,9 +1,9 @@
 <h1>開催日程</h1>
-
 <div id="left_column">
      <% if @token %>
         <div>グループURL:
             <input id="copyTarget" type="text" size="62" value="<%= schedules_url + "?access_token=#{@token.access_token}"%>" readonly >
+                    <button onclick="copyToClipboard()">イベントのURLをコピー</button>
         </div>
       <% end %>  
     <table cellspacing="0" cellpadding="0">

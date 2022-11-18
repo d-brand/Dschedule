@@ -26,13 +26,11 @@
   <body>
   <% if user_signed_in?%>
       <% if !@team.nil? %>
-      <%if !current_page?(root_path)%>
-          <% if current_page?(schedules_path(teamcores_teamname: @team.teamname)) ||current_page?(schedule_path(teamcores_teamname: @team.teamname)) %>
+      <!--<%if !current_page?(root_path)%> %>
             <div id= url_button>
                 <button onclick="copyToClipboard()">イベントのURLをコピー</button>
             </div>
-          <% end %>
-      <% end %>
+      <% end %>-->
         <header><h1><%=@team.teamname%></h1>
         </header>
         <nav>

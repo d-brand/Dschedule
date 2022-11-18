@@ -39,6 +39,7 @@ class ApplicationController < ActionController::Base
 
     
     schedules = Schedule.where("schedules.user_id=? and schedules.ymd > ?",current_user.id,Time.current.yesterday).reorder(:ymd)
+    @schedule=schedules
     if schedules.present?
       workschedule =schedules.first
       return schedule_path(id: workschedule.id, teamcores_teamname: @team.teamname) # ログイン後に遷移するpathを設定
