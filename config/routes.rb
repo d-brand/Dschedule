@@ -5,8 +5,6 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :users
   end
-  #root 'schedules#show'
-  # get "/" => "schedules#index"
   get 'login', to: 'home#index'
   resources :team
   post 'token_generte', to: 'team#token_generte'
@@ -14,7 +12,7 @@ Rails.application.routes.draw do
   scope '/:teamcores_teamname' do
     resources :schedules
   end
-  #resources :schedules
+
   resources :kiyaku
   # registrations_controller.rbを有効にします。
   devise_for :users, controllers: {
@@ -26,12 +24,6 @@ Rails.application.routes.draw do
     get 'users/sign_up/email_notice', to: 'users/registrations#email_notice'
     get 'users/sign_up/complete', to: 'users/registrations#complete'
   end
-  # お問い合わせフォーム
-  resources :contacts, only: [:new, :create]
-  post 'contacts/confirm', to: 'contacts#confirm', as: 'confirm'
-  post 'contacts/back', to: 'contacts#back', as: 'back'
-  get 'done', to: 'contacts#done', as: 'done'
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
   get '*path', controller: 'application', action: 'render_404'
 end
