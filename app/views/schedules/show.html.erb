@@ -38,12 +38,10 @@
                     <% end %>
                 </td>
                 <td class="border_tl"><%= simple_format schedule.addcomment %></td>
-                <tr class="active">
                     <td class="border_tl" align="center"><%= schedule.answers.sanka&.count %></td>
                     <td class="border_tl" align="center"><%= schedule.answers.tabun&.count %></td>
                     <td class="border_tl" align="center"><%= schedule.answers.mitei&.count %></td>
                     <td class="border_tl" align="center"><%= schedule.answers.kesseki&.count %></td>
-                </tr>
             </tr>
             <% else %>
             <tr>
