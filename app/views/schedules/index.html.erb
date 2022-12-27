@@ -8,8 +8,9 @@
       <% end %>  
     <table cellspacing="0" cellpadding="0">
         <tr>
-            <th class="border_n" rowspan="2" width="30%" bgcolor="#bfbfbf">日時・場所</th>
-            <td class="border_l" colspan="4" align="center" bgcolor="#bfbfbf">コメント</td>
+            <th class="border_n" rowspan="2" width="25%" bgcolor="#1f51a2"><font color="#fff">日時・場所</font></th>
+            <td class="border_l" rowspan="2" align="center" bgcolor="#1f51a2"><font color="#fff">コメント</font></td>
+            <td class="border_l" colspan="4" align="center" bgcolor="#1f51a2"><font color="#fff">出欠</font></td>
             <tr>
                 <td class="border_tl" align="center" bgcolor="#99ffcc">参加</td>
                 <td class="border_tl" align="center" bgcolor="#ffffcc">多分</td>
@@ -20,7 +21,7 @@
      <% if @schedules.count > 0 %>
         <% @schedules.each do |schedule| %>
             <tr>
-            <td class="border_t" rowspan="2">
+            <td class="border_t">
 
             
             <% weeks = ["月","火","水","木","金","土","日"] %>
@@ -32,7 +33,7 @@
             <% end %>
 
             </td>
-            <td class="border_tl" colspan="4"><%= simple_format schedule.addcomment %></td>
+            <td class="border_tl"><%= simple_format schedule.addcomment %></td>
             <tr>
                 <td class="border_tl" align="center"><%= schedule.answers.sanka&.count %></td>
                 <td class="border_tl" align="center"><%= schedule.answers.tabun&.count %></td>
