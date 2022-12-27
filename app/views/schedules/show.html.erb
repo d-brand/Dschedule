@@ -23,7 +23,7 @@
             <% @schedules.each do |schedule| %>
             <% if params[:id].to_i == schedule.id %>
             <tr class="active">
-                <td class="border_t" rowspan="2">            
+                <td class="border_t">            
                     <% weeks = ["月","火","水","木","金","土","日"] %>
                     <% index = schedule.ymd.strftime("%u").to_i %>
                     <% if user_signed_in? %>
