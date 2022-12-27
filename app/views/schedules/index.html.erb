@@ -1,11 +1,11 @@
+<% if @token %>
+<div>グループURL:
+    <input id="copyTarget" type="text" size="62" value="<%= schedules_url + "?access_token=#{@token.access_token}"%>" readonly >
+            <button onclick="copyToClipboard()">イベントのURLをコピー</button>
+</div>
+<% end %>  
 <h1>開催日程</h1>
 <div id="left_column">
-     <% if @token %>
-        <div>グループURL:
-            <input id="copyTarget" type="text" size="62" value="<%= schedules_url + "?access_token=#{@token.access_token}"%>" readonly >
-                    <button onclick="copyToClipboard()">イベントのURLをコピー</button>
-        </div>
-      <% end %>  
     <table cellspacing="0" cellpadding="0">
         <tr>
             <th class="border_n" rowspan="2" width="25%" bgcolor="#1f51a2"><font color="#fff">日時・場所</font></th>
