@@ -56,7 +56,7 @@
 
     <% flash.each do |message_type, message| %>
          <font color="#50a649">
-          <%= content_tag :div, message, class: message_type %>
+          <%= content_tag :div, message, class: message_type,{ class: "caution_message" } %>
         </font>
     <% end %>
 
