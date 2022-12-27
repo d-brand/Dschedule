@@ -52,7 +52,10 @@ footer{
 
 
 table{
-    border: solid 1px #808080;
+    border-bottom: none;
+    border-top: solid 1px #808080;
+    border-left: none;
+    border-right: solid 1px #808080;
     width: 100%;
 }
 
@@ -69,7 +72,10 @@ table tr td{
 }
 
 .border_n{
-    border: none;
+    border-bottom: solid 1px #808080;
+    border-top: none;
+    border-left: solid 1px #808080;
+    border-right: none;
 }
 
 .border_master_l{
@@ -81,21 +87,21 @@ table tr td{
 
 .border_l{
     border-top: none;
-    border-bottom: none;
+    border-bottom: solid 1px #808080;
     border-left: solid 1px #808080;
     border-right: none;
 }
 
 .border_t{
-    border-top: solid 1px #808080;
-    border-bottom: none;
-    border-left: none;
+    border-top: none;
+    border-bottom: solid 1px #808080;
+    border-left: solid 1px #808080;
     border-right: none;
 }
 
 .border_tl{
-    border-top: solid 1px #808080;
-    border-bottom: none;
+    border-top: none;
+    border-bottom: solid 1px #808080;
     border-left: solid 1px #808080;
     border-right: none;
 }
