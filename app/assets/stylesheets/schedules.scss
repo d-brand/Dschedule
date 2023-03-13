@@ -67,9 +67,6 @@ a {
 /* --------------------------------------------------
 	main
 -------------------------------------------------- */
-#column {
-    padding: 20px;
-  }
   #column > h1 {
     margin: 0 0 0.67em;
     font-size: 2em;
@@ -142,6 +139,7 @@ a {
   #right_column table tr td {
     height: 48px;
     padding: 8px;
+    background-color: #fff;
   }
   #right_column .btn-border2 {
     display: inline-block;
