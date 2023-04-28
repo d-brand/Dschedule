@@ -12,30 +12,14 @@
 html{
     font-family: "Hiragino Kaku Gothic ProN","メイリオ", sans-serif;
     font-size: 11pt;
+    width: 100%;
+    height: 100%;
 }
 
 body{
     margin: 0;
     padding: 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 header{
     background-color: #fff;
@@ -51,6 +35,27 @@ footer{
     height: 23px;    
     padding: 23px;
 }
+
+
+.spBreak {
+    display: none;
+}
+
+@media (min-width: 1025px) {
+    a {
+      transition: 0.6s;
+    }
+  
+    a:hover {
+      opacity: 0.6;
+    }
+}
+
+
+
+
+
+
 #url_button{
     display:flex;
     float: right;
