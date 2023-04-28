@@ -17,6 +17,7 @@
     <%end%>
   <% end %>
 <%= favicon_link_tag('Dbrandfavicon.ico') %>
+<%= favicon_link_tag 'path/to/apple-touch-icon.png', rel: 'apple-touch-icon', sizes: '192x192' %>
 <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
