@@ -53,7 +53,6 @@
                     <% else %>
                         <%= link_to schedule.ymd.strftime("%Y年%m月%d日(#{weeks[index - 1]})"), schedule_path(id:schedule.id, access_token: params[:access_token],teamcores_teamname: @team.teamname) %><br><%= schedule.start.strftime('%H:%M') %> ～ <%= schedule.end.strftime('%H:%M') %><br><%= schedule.place %>
                     <% end %>
-
                 </td>
                 <td class="border_tl"><%= simple_format schedule.addcomment %></td>
                 <td class="border_tl" align="center"><%= schedule.answers.sanka&.count %></td>
